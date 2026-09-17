@@ -1,30 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { getContent, profile } from './data';
+import { getExperiences, profile } from './data';
+import type { Experience } from './data';
 import { LanguageSwitch, useLanguage } from './i18n';
-import type { Project } from './data';
-import FlowGraphic from './components/FlowGraphic';
-import { ProjectVisual } from './components/ProjectVisual';
+import { ExperienceCover } from './components/ExperienceCover';
 
-function Arrow({ diagonal = false, className = '' }: { diagonal?: boolean; className?: string }) {
+function Arrow({ down = false }: { down?: boolean }) {
   return (
     <svg
-      className={`icon ${className}`}
-      width="20"
-      height="20"
+      className="icon"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.6"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {diagonal ? <path d="M6 18 18 6M6 6h12v12" /> : <path d="M4 12h16m-6-6 6 6-6 6" />}
+      {down ? <path d="M12 4v16m-6-6 6 6 6-6" /> : <path d="M6 18 18 6M6 6h12v12" />}
     </svg>
   );
 }
-
+function NavIcon({ kind }: { kind: string }) {
+  return (
+    <svg
+      className="icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {kind === 'about' ? (
+        <>
+          <circle cx="12" cy="7" r="3.5" />
+          <path d="M5 21v-2a7 7 0 0 1 14 0v2" />
+        </>
+      ) : kind === 'projects' ? (
+        <>
+          <rect x="3" y="6" width="18" height="15" rx="2" />
+          <path d="M8 6V3h8v3M3 12h18m-9 0v3" />
+        </>
+      ) : kind === 'skills' ? (
+        <path d="m7 6-6 6 6 6m10-12 6 6-6 6m-3-14-4 16" />
+      ) : (
+        <>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 6 9 7 9-7" />
+        </>
+      )}
+    </svg>
+  );
+}
 function ExternalLink({
   href,
   children,
@@ -36,137 +65,162 @@ function ExternalLink({
 }) {
   const { t } = useLanguage();
   return (
-    <a className={className} href={href} target="_blank" rel="noreferrer">
+    <a href={href} className={className} target="_blank" rel="noreferrer">
       {children}
-      <Arrow diagonal />
+      <Arrow />
       <span className="sr-only"> ({t.newTab})</span>
     </a>
   );
 }
-
-function ProjectDialog({ project, onClose }: { project: Project | null; onClose: () => void }) {
+function ExperienceItem({
+  experience,
+  index,
+  open,
+  onToggle,
+}: {
+  experience: Experience;
+  index: number;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const { t } = useLanguage();
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog || !project) return;
-    const previousOverflow = document.body.style.overflow;
-    dialog.showModal();
-    document.body.style.overflow = 'hidden';
-    return () => {
-      dialog.close();
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [project]);
+  const hasDetails = experience.details.length > 0;
   return (
-    <dialog
-      className="project-dialog"
-      ref={dialogRef}
-      onCancel={onClose}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          const bounds = event.currentTarget.getBoundingClientRect();
-          if (
-            event.clientX < bounds.left ||
-            event.clientX > bounds.right ||
-            event.clientY < bounds.top ||
-            event.clientY > bounds.bottom
-          )
-            onClose();
-        }
-      }}
-      aria-labelledby="dialog-title"
-    >
-      {project && (
-        <>
-          <button className="dialog-close" onClick={onClose} aria-label={t.closeProject} autoFocus>
-            <span aria-hidden="true">×</span>
-          </button>
-          <div className={`dialog-visual ${project.kind}`}>
-            <ProjectVisual kind={project.kind} />
+    <article className={`experience-item ${open ? 'is-open' : ''}`} id={`story-${experience.id}`}>
+      <div className="experience-index" aria-hidden="true">
+        {String(index + 1).padStart(2, '0')}
+      </div>
+      <div className="experience-main">
+        <div className={`experience-preview ${hasDetails ? 'is-interactive' : ''}`}>
+          <div className="experience-topline">
+            <span className="category-label">{experience.category}</span>
+            <span className="experience-date">{experience.period}</span>
           </div>
-          <div className="dialog-content">
-            <span className="eyebrow">
-              PROJECT {project.number} · {project.category}
-            </span>
-            <h2 id="dialog-title">{project.name}</h2>
-            <p className="dialog-subtitle">{project.subtitle}</p>
-            <div className="dialog-meta">
-              <span>{project.period}</span>
-              <span>{project.role}</span>
+          <h3>
+            {hasDetails ? (
+              <button
+                type="button"
+                className="experience-trigger"
+                aria-expanded={open}
+                aria-controls={`detail-${experience.id}`}
+                onClick={onToggle}
+              >
+                {experience.name}
+                <span className="expand-icon" aria-hidden="true">
+                  {open ? '−' : '+'}
+                </span>
+              </button>
+            ) : (
+              experience.name
+            )}
+          </h3>
+          <p className="experience-description">{experience.description || t.pending}</p>
+          <div className="experience-overview">
+            <figure
+              className={`experience-cover cover-${experience.id}`}
+              role="img"
+              aria-label={`${experience.name} · ${t.coverNote}`}
+            >
+              <ExperienceCover kind={experience.id} />
+            </figure>
+            <div className="experience-facts">
+              {experience.role && (
+                <div>
+                  <span className="fact-label">{t.role}</span>
+                  <p>{experience.role}</p>
+                </div>
+              )}
+              {experience.tags.length > 0 && (
+                <div>
+                  <span className="fact-label">{t.tools}</span>
+                  <div className="tags">
+                    {experience.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {hasDetails && (
+                <span className="explore-story">
+                  {open ? t.closeDetails : t.openDetails}
+                  <span aria-hidden="true">{open ? '−' : '↗'}</span>
+                </span>
+              )}
             </div>
-            <h3>{t.problem}</h3>
-            <p>{project.summary}</p>
-            <h3>{t.contribution}</h3>
-            <ul>
-              {project.work.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <h3>{t.outcome}</h3>
-            <p>{project.takeaway}</p>
-            <div className="tags">
-              {project.tags.map((tag) => (
-                <span key={tag}>{tag}</span>
+          </div>
+        </div>
+        {hasDetails && (
+          <div className="experience-detail" id={`detail-${experience.id}`} hidden={!open}>
+            <div className="detail-grid">
+              {experience.details.map((detail) => (
+                <div key={detail.title}>
+                  <h4>{detail.title}</h4>
+                  <p>{detail.text}</p>
+                </div>
               ))}
             </div>
-            {project.link && (
-              <ExternalLink className="button button-dark" href={project.link.url}>
-                {project.link.label}
+            {experience.link && (
+              <ExternalLink href={experience.link.url} className="story-link">
+                {experience.link.label}
               </ExternalLink>
             )}
           </div>
-        </>
-      )}
-    </dialog>
+        )}
+      </div>
+    </article>
   );
 }
 
 function App() {
   const { language, t } = useLanguage();
-  const { projects, experiences, awards, skills } = getContent(language);
-  const navigation = [
-    { id: 'about', label: t.navAbout },
-    { id: 'projects', label: t.navProjects },
-    { id: 'experience', label: t.navExperience },
-    { id: 'skills', label: t.navSkills },
-  ];
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-  const [filter, setFilter] = useState('all');
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-  const selectedProject = projects.find((project) => project.id === selectedProjectId) ?? null;
+  const experiences = getExperiences(language);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState('about');
   const [copyStatus, setCopyStatus] = useState<'' | 'success' | 'error'>('');
-  const [progress, setProgress] = useState(0);
-
+  const navigation = [
+    { id: 'about', label: t.intro },
+    { id: 'projects', label: t.experience },
+    { id: 'skills', label: t.skills },
+    { id: 'contact', label: t.contact },
+  ];
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { rootMargin: '-15% 0px -55% 0px', threshold: 0 },
-    );
-    document.querySelectorAll('main > section[id]').forEach((section) => observer.observe(section));
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? window.scrollY / max : 0);
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('main > section[id]'));
+    let frame = 0;
+    const updateSection = () => {
+      frame = 0;
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) {
+        setActiveSection('contact');
+        return;
+      }
+      const readingLine = Math.max(180, window.innerHeight * 0.25);
+      let current = 'about';
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top > readingLine) break;
+        current =
+          section.id === 'home' ? 'about' : section.id === 'education' ? 'skills' : section.id;
+      }
+      setActiveSection(current);
     };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateSection);
+    };
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
+    const resizeObserver = new ResizeObserver(scheduleUpdate);
+    sections.forEach((section) => resizeObserver.observe(section));
+    updateSection();
     return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      window.cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
     };
   }, []);
-
   useEffect(() => {
     if (!copyStatus) return;
     const timer = window.setTimeout(() => setCopyStatus(''), 3500);
     return () => window.clearTimeout(timer);
   }, [copyStatus]);
-
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText(profile.email);
@@ -175,453 +229,222 @@ function App() {
       setCopyStatus('error');
     }
   }
-
-  const visibleProjects = projects.filter(
-    (project) => filter === 'all' || project.category === filter,
-  );
-
+  const strengths = [
+    { title: t.skill1, description: t.skill1Description, tags: ['E-commerce', 'Product thinking'] },
+    {
+      title: t.skill2,
+      description: t.skill2Description,
+      tags: ['React', 'FastAPI', 'YOLO', 'GCP'],
+    },
+    {
+      title: t.skill3,
+      description: t.skill3Description,
+      tags: ['CFD', 'Ansys Fluent', 'Data analysis'],
+    },
+  ];
   return (
     <>
-      <a className="skip-link" href="#main">
+      <a href="#main" className="skip-link">
         {t.skip}
       </a>
-      <div className="reading-progress" style={{ transform: `scaleX(${progress})` }} />
-      <header className="header">
-        <a className="brand" href="#home" aria-label={t.home}>
-          <span className="brand-mark">
-            s<span>.</span>
-          </span>
-          <span>
-            SUMIN CHO<span className="brand-slash"> / </span>
-            <span className="brand-portfolio">PORTFOLIO</span>
-          </span>
+      <header className="site-header">
+        <a className="wordmark" href="#home" aria-label={t.home}>
+          SUMIN CHO<span aria-hidden="true">.</span>
         </a>
+        <div className="header-right">
+          <ExternalLink href={profile.github} className="header-github">
+            GitHub
+          </ExternalLink>
+          <LanguageSwitch />
+        </div>
+      </header>
+      <main id="main">
+        <section className="hero" id="home">
+          <span className="hero-eyebrow">
+            <span aria-hidden="true" />
+            SOFTWARE · AI · RESEARCH
+          </span>
+          <h1>
+            {t.heroHello}
+            <br />
+            {t.heroPrefix}
+            <span className="name-highlight">{t.heroName}</span>
+            {t.heroSuffix}
+          </h1>
+          <p>{t.heroDescription}</p>
+          <a href="#projects" className="hero-explore" aria-label={t.experience}>
+            <Arrow down />
+          </a>
+        </section>
         <nav
-          id="main-nav"
-          className={menuOpen ? 'navigation open' : 'navigation'}
-          aria-label={t.menu}
+          className="section-nav"
+          aria-label={language === 'ko' ? '섹션 내비게이션' : 'Section navigation'}
         >
           {navigation.map((item) => (
             <a
-              key={item.id}
               href={`#${item.id}`}
+              key={item.id}
               className={activeSection === item.id ? 'active' : ''}
               aria-current={activeSection === item.id ? 'location' : undefined}
-              onClick={() => setMenuOpen(false)}
             >
-              {item.label}
+              <NavIcon kind={item.id} />
+              <span>{item.label}</span>
             </a>
           ))}
-          <a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>
-            {t.navContact} <Arrow diagonal />
-          </a>
         </nav>
-        <div className="header-actions">
-          <LanguageSwitch />
-          <button
-            className="menu-toggle"
-            type="button"
-            aria-expanded={menuOpen}
-            aria-controls="main-nav"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? t.menuClose : t.menuOpen}
-          >
-            <span />
-            <span />
-          </button>
-        </div>
-      </header>
-
-      <main id="main">
-        <section id="home" className="hero section-width">
-          <div className="hero-copy">
-            <div className="hero-intro">
-              <span className="live-dot" /> AI & SOFTWARE ENGINEER
-            </div>
-            <h1>
-              {t.heroLine1}
-              <br /> <span className="hero-highlight">{t.heroLine2}</span>
-            </h1>
-            <p className="hero-name">
-              {t.greeting}
-              <strong>{t.name}</strong>
-              {t.greetingEnd}
-              <span className="text-blue">.</span>
-            </p>
-            <p className="hero-description">
-              {t.heroDescription1}
-              <br /> {t.heroDescription2}
-            </p>
-            <div className="hero-actions">
-              <a className="button button-dark" href="#projects">
-                {t.explore} <Arrow />
-              </a>
-              <ExternalLink className="hero-github" href={profile.github}>
-                GitHub
-              </ExternalLink>
-            </div>
+        <section className="about-section content-width" id="about">
+          <div className="section-intro">
+            <span className="eyebrow">ABOUT ME</span>
+            <h2>{t.aboutTitle}</h2>
+            <p>{t.aboutDescription}</p>
           </div>
-          <FlowGraphic />
-          <div className="hero-bottom">
-            <span>
-              <span className="small-cross">✳</span> {t.tagline}
-            </span>
-            <a href="#about">
-              SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+          <div className="milestones" aria-label={t.recognition}>
+            <a
+              className="milestone"
+              href="https://www.etnews.com/20260827000345"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="milestone-date">2026.08</span>
+              <h3>{t.award1}</h3>
+              <p>{t.award1Detail}</p>
+              <Arrow />
+              <span className="sr-only"> ({t.newTab})</span>
             </a>
-            <span className="hero-location">BASED IN SOUTH KOREA</span>
-          </div>
-        </section>
-
-        <div className="credential-strip">
-          <div className="section-width credential-inner">
-            <span>
-              BUILDING WITH
-              <br /> <strong>CURIOSITY & PURPOSE</strong>
-            </span>
-            <div>
-              <span className="credential-symbol">↗</span>
-              <span>
-                ML Empowerment Build Challenge<strong>3rd Place · Best Use of ML</strong>
-              </span>
+            <div className="milestone">
+              <span className="milestone-date">2026.07</span>
+              <h3>{t.award2}</h3>
+              <p>{t.award2Detail}</p>
             </div>
-            <div>
-              <span className="credential-symbol cloud-symbol">☁</span>
-              <span>
-                Google Cloud Certified<strong>Professional ML Engineer</strong>
-              </span>
-            </div>
-            <div>
-              <span className="credential-symbol">⊞</span>
-              <span>
-                Qualcomm Institute · UC San Diego<strong>AI Entrepreneurship Program</strong>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <section id="about" className="section-width about-section section-space">
-          <div className="section-label">
-            <span>01 / ABOUT ME</span>
-            <span className="label-line" />
-          </div>
-          <div className="about-grid">
-            <div>
-              <h2>
-                {t.aboutLine1}
-                <br /> {t.aboutLine2}
-                <span className="serif-word">{t.aboutHighlight}</span>
-              </h2>
-              <div className="about-signature">
-                Sumin Cho <span>↗</span>
-              </div>
-            </div>
-            <div className="about-copy">
-              <p>
-                {t.aboutIntro}
-                <br /> <strong>{t.aboutBelief}</strong>
-              </p>
-              <p>{t.aboutBusiness}</p>
-              <p>{t.aboutResearch}</p>
-              <div className="about-keywords">
-                {t.aboutKeywords.map((keyword) => (
-                  <span key={keyword}>{keyword}</span>
-                ))}
-              </div>
+            <div className="milestone">
+              <span className="milestone-date">2026.03</span>
+              <h3>{t.award3}</h3>
+              <p>{t.award3Detail}</p>
             </div>
           </div>
         </section>
-
-        <section id="projects" className="projects-section section-space">
-          <div className="section-width">
-            <div className="section-label">
-              <span>02 / SELECTED WORK</span>
-              <span className="label-line" />
-              <span>2026</span>
-            </div>
-            <div className="section-heading">
-              <div>
-                <h2>
-                  {t.workLine1} {t.workLine2}
-                  <span className="text-blue">.</span>
-                </h2>
-                <p>{t.workDescription}</p>
-              </div>
-              <div className="project-filters" role="group" aria-label={t.filterLabel}>
-                {['all', 'AI & ML', 'Full-stack'].map((item) => (
-                  <button
-                    key={item}
-                    aria-pressed={filter === item}
-                    className={filter === item ? 'selected' : ''}
-                    onClick={() => setFilter(item)}
-                  >
-                    {item === 'all' ? t.all : item}
-                    {item === 'all' && <span>03</span>}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="project-grid">
-              {visibleProjects.map((project) => (
-                <article className={`project-card ${project.kind}`} key={project.id}>
-                  <div className="project-card-content">
-                    <div className="project-image">
-                      <div className="project-image-label">
-                        <span>{project.category}</span>
-                        <span>{project.number} / 03</span>
-                      </div>
-                      <ProjectVisual kind={project.kind} />
-                      <span className="project-image-arrow">
-                        <Arrow diagonal />
-                      </span>
-                    </div>
-                    <div className="project-info">
-                      <span className="project-status">
-                        <i />
-                        {project.status}
-                      </span>
-                      <h3>
-                        <button
-                          className="project-open"
-                          aria-label={`${project.name} ${t.projectDetails}`}
-                          onClick={() => setSelectedProjectId(project.id)}
-                        >
-                          {project.name}
-                          <Arrow diagonal />
-                        </button>
-                      </h3>
-                      <span className="project-subtitle">{project.subtitle}</span>
-                      <p>{project.description}</p>
-                      <div className="tags">
-                        {project.tags.map((tag) => (
-                          <span key={tag}>{tag}</span>
-                        ))}
-                      </div>
-                      <div className="project-bottom">
-                        <span>{project.period}</span>
-                        <span>
-                          {t.projectStory} <span aria-hidden="true">+</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <div className="projects-footnote">
-              <span role="status" aria-live="polite">
-                {visibleProjects.length}
-                {language === 'en' && visibleProjects.length === 1
-                  ? ' project'
-                  : t.projectCount} · {t.illustrationNote}
-              </span>
-              <ExternalLink href={profile.github}>{t.moreCode}</ExternalLink>
-            </div>
-            <div className="more-work">
-              <span className="eyebrow">ALSO BUILT</span>
-              <ExternalLink href="https://github.com/barcybarcy/sic-assembler-c">
-                SIC Assembler <span className="muted">C · 2-pass assembler</span>
-              </ExternalLink>
-              <ExternalLink href="https://github.com/barcybarcy/blog-springboot">
-                Spring Boot Blog <span className="muted">Java · Spring · MySQL</span>
-              </ExternalLink>
-            </div>
+        <section className="experiences-section content-width" id="projects">
+          <div className="section-intro">
+            <span className="eyebrow">SELECTED EXPERIENCES</span>
+            <h2>{t.experienceTitle}</h2>
+            <p>{t.experienceDescription}</p>
+          </div>
+          <div className="list-heading">
+            <span>{t.experienceCount}</span>
+            <span>2020 — 2026</span>
+          </div>
+          <div className="experience-list">
+            {experiences.map((experience, index) => (
+              <ExperienceItem
+                key={experience.id}
+                experience={experience}
+                index={index}
+                open={expanded === experience.id}
+                onToggle={() => setExpanded(expanded === experience.id ? null : experience.id)}
+              />
+            ))}
           </div>
         </section>
-
-        <section id="experience" className="section-width section-space experience-section">
-          <div className="section-label">
-            <span>03 / MY JOURNEY</span>
-            <span className="label-line" />
+        <section className="skills-section content-width" id="skills">
+          <div className="section-intro">
+            <span className="eyebrow">WHAT I BRING</span>
+            <h2>{t.skillsTitle}</h2>
           </div>
-          <div className="experience-layout">
-            <div className="experience-intro">
-              <h2>
-                {t.journeyLine1}
-                <br /> {t.journeyLine2}
-              </h2>
-              <p>
-                {t.journeyDescription1}
-                <br /> {t.journeyDescription2}
-                <br /> {t.journeyDescription3}
-              </p>
-              <span className="journey-decoration" aria-hidden="true">
-                ↘
-              </span>
-            </div>
-            <div className="timeline">
-              {experiences.map((item) => (
-                <article className="timeline-item" key={item.title}>
-                  <div className="timeline-top">
-                    <span>{item.date}</span>
-                    <span className="timeline-tag">{item.tag}</span>
-                  </div>
-                  <h3>{item.title}</h3>
-                  <span className="timeline-org">{item.organization}</span>
-                  <p>{item.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-          <div className="awards-heading">
-            <span className="eyebrow">A FEW MILESTONES</span>
-            <h3>{t.awardsHeading}</h3>
-          </div>
-          <div className="awards-list">
-            {awards.map((award, index) => (
-              <article className="award-row" key={award.title}>
-                <span className="award-icon" aria-hidden="true">
-                  {index === 0 ? '✳' : '✧'}
-                </span>
-                <div>
-                  <h4>{award.title}</h4>
-                  <p>{award.detail}</p>
+          <div className="strengths">
+            {strengths.map((strength, i) => (
+              <article key={i}>
+                <span className="strength-number">0{i + 1}</span>
+                <h3>{strength.title}</h3>
+                <p>{strength.description}</p>
+                <div className="strength-tags">
+                  {strength.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
                 </div>
-                <span className="award-extra">{award.extra}</span>
-                <span className="award-date">{award.date}</span>
-                {award.url ? (
-                  <ExternalLink className="award-link" href={award.url}>
-                    <span className="sr-only">
-                      {award.title} {t.awardArticle}
-                    </span>
-                  </ExternalLink>
-                ) : (
-                  <span className="award-link" />
-                )}
               </article>
             ))}
           </div>
         </section>
-
-        <section id="skills" className="skills-section section-space">
-          <div className="section-width">
-            <div className="section-label">
-              <span>04 / TOOLKIT & FOUNDATION</span>
-              <span className="label-line" />
-            </div>
-            <div className="section-heading">
+        <section className="education-section content-width" id="education">
+          <div className="section-intro compact">
+            <span className="eyebrow">THE FOUNDATION</span>
+            <h2>{t.educationTitle}</h2>
+          </div>
+          <div className="education-list">
+            <article>
+              <span className="education-symbol" aria-hidden="true">
+                ↗
+              </span>
               <div>
-                <h2>
-                  {t.skillsHeading}
-                  <span className="text-blue">.</span>
-                </h2>
-                <p>{t.skillsDescription}</p>
-              </div>
-            </div>
-            <div className="skills-grid">
-              {skills.map((skill) => (
-                <article className="skill-card" key={skill.title}>
-                  <span className="skill-number">
-                    {skill.number}
-                    <span>↗</span>
-                  </span>
-                  <h3>{skill.title}</h3>
-                  <p>{skill.description}</p>
-                  <div className="tags">
-                    {skill.items.map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-            <div className="education-grid">
-              <article>
-                <span className="eyebrow">EDUCATION</span>
                 <h3>{t.university}</h3>
                 <p>{t.degree}</p>
-                <div className="education-meta">
-                  <span>{t.graduation}</span>
-                  <strong>
-                    GPA 4.05 <span>/ 4.5</span>
-                  </strong>
-                </div>
-              </article>
-              <article>
-                <span className="eyebrow">GLOBAL EXPERIENCE</span>
-                <h3>Qualcomm Institute at UC San Diego</h3>
-                <p>17th AI Entrepreneurship Program</p>
-                <div className="education-meta">
-                  <span>2026.06 — 2026.07</span>
-                  <span>La Jolla, CA</span>
-                </div>
-              </article>
-              <article className="certification">
-                <span className="eyebrow">CERTIFICATION</span>
-                <span className="certification-mark" aria-hidden="true">
-                  ✳
-                </span>
-                <h3>
-                  Professional
-                  <br /> Machine Learning Engineer
-                </h3>
-                <p>Google Cloud Certified · 2026.08</p>
-              </article>
-            </div>
+              </div>
+              <span>GPA 4.05 / 4.5</span>
+            </article>
+            <article>
+              <span className="education-symbol" aria-hidden="true">
+                ↗
+              </span>
+              <div>
+                <h3>Qualcomm Institute · UC San Diego</h3>
+                <p>{t.program}</p>
+              </div>
+              <span>2026.06 — 07</span>
+            </article>
+            <article>
+              <span className="education-symbol" aria-hidden="true">
+                ↗
+              </span>
+              <div>
+                <h3>Google Cloud Certified</h3>
+                <p>{t.certification}</p>
+              </div>
+              <span>2026.08</span>
+            </article>
           </div>
         </section>
-
-        <section id="contact" className="section-width contact-section">
-          <div className="contact-top">
-            <span className="eyebrow">
-              <span className="live-dot" /> LET’S CONNECT
-            </span>
-            <span className="contact-spark" aria-hidden="true">
-              ✳
-            </span>
+        <section className="contact-section content-width" id="contact">
+          <span className="eyebrow">LET’S CONNECT</span>
+          <h2>{t.contactTitle}</h2>
+          <p>{t.contactDescription}</p>
+          <div className="contact-actions">
+            <a className="email-link" href={`mailto:${profile.email}`}>
+              {profile.email}
+              <Arrow />
+            </a>
+            <button className="copy-button" onClick={copyEmail} aria-label={t.copyEmail}>
+              <svg
+                className="icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                aria-hidden="true"
+              >
+                <rect x="8" y="8" width="12" height="13" rx="2" />
+                <path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3" />
+              </svg>
+            </button>
           </div>
-          <h2>
-            {t.contactLine1}
-            <br /> {t.contactLine2}
-            <span className="text-blue">{t.contactPunctuation}</span>
-          </h2>
-          <div className="contact-bottom">
-            <p>
-              {t.contactDescription1}
-              <br /> {t.contactDescription2}
-            </p>
-            <div className="contact-email">
-              <a href={`mailto:${profile.email}`}>
-                {profile.email}
-                <Arrow diagonal />
-              </a>
-              <button type="button" onClick={copyEmail} aria-label={t.copyEmail}>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="icon"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  aria-hidden="true"
-                >
-                  <rect x="8" y="8" width="12" height="13" rx="2" />
-                  <path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div className="copy-status" role="status" aria-live="polite">
+          <div className="copy-status" role="status">
             {copyStatus === 'success' ? t.copySuccess : copyStatus === 'error' ? t.copyError : ''}
+          </div>
+          <div className="social-links">
+            <ExternalLink href={profile.github}>GitHub</ExternalLink>
+            <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
           </div>
         </section>
       </main>
-      <footer className="footer section-width">
-        <a className="footer-brand" href="#home">
-          s<span>.</span>
+      <footer className="site-footer content-width">
+        <a href="#home" className="wordmark">
+          SUMIN CHO<span>.</span>
         </a>
-        <span>© {new Date().getFullYear()} SUMIN CHO</span>
-        <span className="footer-note">Always curious. Always building.</span>
-        <div>
-          <ExternalLink href={profile.github}>GitHub</ExternalLink>
-          <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
-          <a href="#home" aria-label={t.backToTop}>
-            ↑
-          </a>
-        </div>
+        <span>© {new Date().getFullYear()}</span>
+        <a href="#home" aria-label={t.backToTop}>
+          ↑
+        </a>
       </footer>
-      <ProjectDialog project={selectedProject} onClose={() => setSelectedProjectId(null)} />
     </>
   );
 }
-
 export default App;

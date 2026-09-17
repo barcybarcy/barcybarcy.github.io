@@ -6,302 +6,238 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/sumin-jo-b1a77a1a4',
 };
 
-export type Project = {
-  id: string;
-  number: string;
+export type Experience = {
+  id: 'store' | 'baro' | 'paragon' | 'ens' | 'drawn';
   name: string;
-  subtitle: string;
-  category: 'AI & ML' | 'Full-stack';
-  kind: 'aero' | 'safety' | 'realdoor';
+  category: string;
   period: string;
-  role: string;
-  status: string;
   description: string;
+  role: string;
   tags: string[];
-  summary: string;
-  work: string[];
-  takeaway: string;
+  details: { title: string; text: string }[];
   link?: { label: string; url: string };
 };
 
-export const projects: Project[] = [
+const korean: Experience[] = [
   {
-    id: 'paragon',
-    number: '01',
-    name: 'Paragon',
-    subtitle: 'AI 차량 공력계수 예측 플랫폼',
-    category: 'AI & ML',
-    kind: 'aero',
-    period: '2026.06 — 2026.08',
-    role: '5인 팀 리더 · 웹 개발 · 클라우드 배포',
-    status: '글로벌 해커톤 3위',
-    description:
-      '3D 차량 형상에서 공기저항계수 예측까지. AI 모델을 누구나 탐색할 수 있는 웹 경험으로 연결했습니다.',
-    tags: ['React', 'Three.js', 'FastAPI', 'Google Cloud'],
-    summary:
-      '차량 설계 초기에는 여러 형상을 빠르게 비교해야 합니다. 정밀 CFD 해석에 앞서 설계 후보를 검토할 수 있도록, 3D 형상과 설계 파라미터에서 공기저항계수(Cd)를 예측하는 AI 웹서비스를 만들었습니다.',
-    work: [
-      '5인 팀을 이끌며 서비스 기획과 구현 범위를 조율했습니다.',
-      'React와 Three.js로 3D 형상을 다루는 인터페이스를 구현했습니다.',
-      'FastAPI REST API와 ML 추론 흐름을 연결하고 Google Cloud에 배포했습니다.',
+    id: 'store',
+    name: '온라인 쇼핑몰 사업',
+    category: '창업 · 서비스 운영',
+    period: '2020.06 — 2024.12',
+    description: '상품 소싱부터 판매, 배송, 고객 응대까지 직접 운영한 첫 사업.',
+    role: '창업 및 운영',
+    tags: ['E-commerce', 'Operations', 'Customer Experience'],
+    details: [
+      {
+        title: '무엇을 했나요?',
+        text: '자동차용품을 판매하는 온라인 스토어를 창업하고, 국내 4개 마켓플레이스에서 운영했습니다.',
+      },
+      {
+        title: '직접 맡은 일',
+        text: '상품 소싱과 가격 결정, 재고·배송 관리, 고객 응대와 정산까지 사업의 전 과정을 맡았습니다.',
+      },
+      {
+        title: '남은 것',
+        text: '고객이 원하는 것과 실제로 운영 가능한 것을 함께 고민하는 관점. 지금도 서비스를 만들 때 가장 먼저 꺼내는 경험입니다.',
+      },
     ],
-    takeaway:
-      'ML Empowerment Build Challenge 2.0에서 296개 출품작 중 전체 3위와 Best Use of Machine Learning을 수상했습니다. QI AI Entrepreneurship Hackathon에서도 별도로 3위를 수상했습니다.',
-    link: { label: '수상 기사 읽기', url: 'https://www.etnews.com/20260827000345' },
   },
   {
     id: 'baro',
-    number: '02',
     name: 'BARO',
-    subtitle: 'CCTV 기반 산업 안전 모니터링',
-    category: 'AI & ML',
-    kind: 'safety',
+    category: 'AI · 산업 안전',
     period: '2026.01 — 현재',
-    role: '팀 리더 · MVP 기획 · 탐지 워크플로 설계',
-    status: '개발 중',
-    description:
-      '이미 설치된 CCTV에 시각 지능을 더합니다. 작은 제조 현장에서도 시작할 수 있는 안전 시스템을 개발합니다.',
+    description: '기존 CCTV로 제조 현장의 위험을 감지하는 안전 모니터링 시스템.',
+    role: '팀 리더',
     tags: ['Python', 'YOLO', 'Computer Vision'],
-    summary:
-      '소규모 제조업체가 기존 CCTV를 활용해 안전 위험을 파악할 수 있도록, 객체 탐지와 위험도 산정, 알림 흐름을 결합한 저비용 산업 안전 시스템을 개발하고 있습니다.',
-    work: [
-      '팀 리더로서 핵심 문제와 MVP 범위를 정의하고 개발을 진행합니다.',
-      'YOLO 객체 탐지를 기반으로 위험도 산정과 알림 워크플로를 설계합니다.',
-      '탐지 오류, 지연 시간, 현장 도입 제약을 고려한 평가 기준을 정리합니다.',
-    ],
-    takeaway:
-      '모델의 탐지 성능뿐 아니라 실제 현장에서 감당할 수 있는 비용과 대응 흐름을 함께 고민합니다. 현재 개발 단계로, 실사용 성과나 현장 검증 수치는 공개하지 않았습니다.',
-  },
-  {
-    id: 'realdoor',
-    number: '03',
-    name: 'RealDoor LA',
-    subtitle: '근거를 확인하는 주거 서류 도우미',
-    category: 'Full-stack',
-    kind: 'realdoor',
-    period: '2026',
-    role: '웹 애플리케이션 개발',
-    status: '연구 프로토타입',
-    description:
-      '복잡한 서류를 이해하는 더 명확한 방법. 문서 속 근거를 확인하고, 필요한 정보를 정리하도록 돕습니다.',
-    tags: ['Next.js', 'TypeScript', 'OpenAI', 'PDF.js'],
-    summary:
-      'LA 주거 신청 과정에 필요한 서류를 이해하고 준비하도록 돕는 프로토타입입니다. 합성 문서에서 정보를 추출하고, 원문 근거와 사용자 확인을 거쳐 준비 자료를 내보내는 흐름을 구현했습니다.',
-    work: [
-      'Next.js와 TypeScript로 문서 업로드부터 검토까지 이어지는 인터페이스를 구성했습니다.',
-      'PDF.js와 Tesseract.js를 활용한 문서 처리, AI 기반 추출 흐름을 연결했습니다.',
-      '추출한 정보의 원문 근거를 보여주고 사용자가 확인한 뒤 준비 자료를 내보내도록 구성했습니다.',
-    ],
-    takeaway:
-      'AI가 제시한 결과를 사용자가 직접 확인할 수 있어야 한다고 생각합니다. 합성 데이터를 사용하는 연구 프로토타입이며, 실제 주거 자격을 심사하거나 선정 결과를 예측하지 않습니다.',
-    link: { label: 'GitHub에서 코드 보기', url: 'https://github.com/barcybarcy/realdoor-la' },
-  },
-];
-
-export const experiences = [
-  {
-    date: '2026.05 — 현재',
-    title: '사용자의 제약을 시스템의 요구사항으로',
-    organization: '시와정보 · 산학협력 소프트웨어 프로젝트',
-    description:
-      '수강신청 과정의 불편을 분석하고, 등록 조건과 규칙을 기술 요구사항으로 정리하며 시스템 개선에 참여하고 있습니다.',
-    tag: 'SOFTWARE',
-  },
-  {
-    date: '2025.11 — 현재',
-    title: '데이터로 이해하는, 사람의 호흡',
-    organization: '경기대학교 기계시스템공학과 · CFD 연구실 학부연구생',
-    description:
-      'CT 기반 비강 형상을 3D Slicer와 SpaceClaim으로 재구성하고 Ansys Fluent로 유동을 분석합니다. ENS 환자의 수술 전후 비강 형상과 벽면 전단응력 변화를 연구합니다.',
-    tag: 'RESEARCH',
-  },
-  {
-    date: '2020.06 — 2024.12',
-    title: '직접 만들고 운영하며 배운 비즈니스',
-    organization: '온라인 자동차용품 스토어 · 창업 및 운영',
-    description:
-      '국내 4개 마켓플레이스에서 상품 소싱부터 가격, 재고, 배송, 고객 응대와 정산까지 직접 운영했습니다. 사용자와 운영자의 문제를 함께 보는 출발점이 되었습니다.',
-    tag: 'BUSINESS',
-  },
-];
-
-export const awards = [
-  {
-    date: '2026.08',
-    title: 'ML Empowerment Build Challenge 2.0',
-    detail: '전체 3위 · Best Use of Machine Learning',
-    extra: '296개 출품작 · 1,184명 참가',
-    url: 'https://www.etnews.com/20260827000345',
-  },
-  {
-    date: '2026.07',
-    title: 'QI AI Entrepreneurship Hackathon',
-    detail: '3위 · Qualcomm Institute at UC San Diego',
-    extra: 'Vehicle Drag Coefficient Analysis',
-  },
-  {
-    date: '2026.03',
-    title: 'RISE 창업경진대회',
-    detail: '우수상 · 경기대학교 RISE 사업단',
-    extra: 'CFD 기반 의료 창업 아이디어',
-  },
-];
-
-export const skills = [
-  {
-    title: 'AI & Computer Vision',
-    number: '01',
-    description: '데이터를 이해하고, 모델의 결과를 실제 사용 흐름에 연결합니다.',
-    items: ['Python', 'PyTorch', 'YOLO', 'OpenCV', 'Machine Learning'],
-  },
-  {
-    title: 'Web & Cloud',
-    number: '02',
-    description: '인터페이스부터 API와 배포까지, 서비스의 전체 흐름을 만듭니다.',
-    items: [
-      'TypeScript',
-      'React',
-      'Three.js',
-      'FastAPI',
-      'Spring',
-      'Docker',
-      'Google Cloud',
-      'Vertex AI',
+    details: [
+      {
+        title: '풀고 있는 문제',
+        text: '소규모 제조업체도 기존 CCTV를 활용해 안전 위험을 파악할 수 있도록 저비용 모니터링 시스템을 개발하고 있습니다.',
+      },
+      {
+        title: '내 역할',
+        text: '팀을 이끌며 MVP 범위를 정하고, 객체 탐지에서 위험도 산정과 알림까지 이어지는 흐름을 설계합니다.',
+      },
+      {
+        title: '현재 집중하는 것',
+        text: '탐지 오류와 지연 시간, 현장 도입 비용을 고려한 평가 기준을 정리하고 있습니다. 현재 개발 단계입니다.',
+      },
     ],
   },
   {
-    title: 'Research & Engineering',
-    number: '03',
-    description: '현상을 모델링하고, 시뮬레이션으로 가설을 검토합니다.',
-    items: ['3D Slicer', 'SpaceClaim', 'Ansys Fluent', 'Tecplot', 'CFD'],
+    id: 'paragon',
+    name: 'PARAGON',
+    category: 'AI · 웹 서비스',
+    period: '2026.06 — 2026.08',
+    description: '3D 차량 형상으로 공기저항계수를 예측하는 AI 웹서비스.',
+    role: '5인 팀 리더 · 웹 개발',
+    tags: ['React', 'Three.js', 'FastAPI', 'Google Cloud'],
+    details: [
+      {
+        title: '무엇을 만들었나요?',
+        text: '정밀 CFD 해석 전 설계 후보를 빠르게 비교할 수 있도록, 차량의 3D 형상과 설계 파라미터로 공기저항계수를 예측하는 서비스를 만들었습니다.',
+      },
+      {
+        title: '내 역할',
+        text: '5인 팀을 이끌고 React·Three.js 인터페이스를 구현했습니다. FastAPI와 ML 추론 흐름을 연결하고 Google Cloud에 배포했습니다.',
+      },
+      {
+        title: '결과',
+        text: 'ML Empowerment Build Challenge 2.0에서 296개 출품작 중 전체 3위와 Best Use of Machine Learning을 수상했습니다. QI AI Entrepreneurship Hackathon에서도 별도로 3위를 수상했습니다.',
+      },
+    ],
+    link: { label: '수상 기사 보기', url: 'https://www.etnews.com/20260827000345' },
+  },
+  {
+    id: 'ens',
+    name: 'ENS CFD 연구',
+    category: '연구 · 유동 해석',
+    period: '2025.11 — 현재',
+    description: '비강의 형상 변화가 호흡과 벽면 전단응력에 미치는 영향을 연구합니다.',
+    role: '경기대학교 CFD 연구실 · 학부연구생',
+    tags: ['3D Slicer', 'SpaceClaim', 'Ansys Fluent'],
+    details: [
+      {
+        title: '연구 주제',
+        text: '빈코증후군(ENS) 환자의 수술 전후 비강 형상과 비강 내 벽면 전단응력 분포의 관계를 연구합니다.',
+      },
+      {
+        title: '내 역할',
+        text: 'CT 기반 형상을 3D Slicer와 SpaceClaim으로 재구성하고, Ansys Fluent로 유동을 분석합니다.',
+      },
+      {
+        title: '연구 환경',
+        text: '경기대학교 기계시스템공학과 김형민 교수님의 CFD 연구실에서 학부연구생으로 참여하고 있습니다.',
+      },
+    ],
+  },
+  {
+    id: 'drawn',
+    name: 'DRAWN',
+    category: '드론 · 설계 플랫폼',
+    period: '',
+    description: '길이·속도·날개 수를 바꿔가며 비행 성능을 추론하는 드론 설계 플랫폼.',
+    role: '',
+    tags: ['Drone Design', 'Performance Inference'],
+    details: [
+      {
+        title: '설계 조건을 입력하고',
+        text: '드론의 길이, 속도, 날개 수 등 설계에 필요한 조건을 직접 설정합니다.',
+      },
+      {
+        title: '비행 성능을 살펴봅니다',
+        text: '입력한 설계 조건을 바탕으로 드론이 얼마나 비행할 수 있을지 추론하는 플랫폼입니다.',
+      },
+    ],
   },
 ];
 
-type PortfolioContent = {
-  projects: Project[];
-  experiences: typeof experiences;
-  awards: typeof awards;
-  skills: typeof skills;
-};
+const english: Experience[] = [
+  {
+    ...korean[0],
+    name: 'Online retail business',
+    category: 'Entrepreneurship · Operations',
+    description:
+      'My first business: from sourcing products to sales, delivery, and customer support.',
+    role: 'Founder & operator',
+    details: [
+      {
+        title: 'The business',
+        text: 'I founded an automotive accessories store and operated it across four Korean marketplaces.',
+      },
+      {
+        title: 'My role',
+        text: 'I managed the full operation: sourcing, pricing, inventory, fulfillment, customer support, and settlements.',
+      },
+      {
+        title: 'What stayed with me',
+        text: 'A habit of considering customer needs and operational realities together. This experience still shapes how I build services.',
+      },
+    ],
+  },
+  {
+    ...korean[1],
+    category: 'AI · Industrial safety',
+    period: '2026.01 — Present',
+    description: 'A safety monitoring system that detects workplace risks through existing CCTV.',
+    role: 'Team lead',
+    details: [
+      {
+        title: 'The problem',
+        text: 'We are developing an affordable monitoring system that helps small manufacturers identify safety risks using their existing cameras.',
+      },
+      {
+        title: 'My role',
+        text: 'I lead the team, define the MVP scope, and design the workflow from object detection to risk scoring and alerts.',
+      },
+      {
+        title: 'Current focus',
+        text: 'We are defining evaluation criteria around detection errors, latency, and deployment costs. The system is in development.',
+      },
+    ],
+  },
+  {
+    ...korean[2],
+    category: 'AI · Web development',
+    description: 'An AI web service that predicts vehicle drag from 3D geometry.',
+    role: 'Team lead of 5 · Web development',
+    details: [
+      {
+        title: 'The product',
+        text: 'We built a service that predicts the drag coefficient from vehicle geometry and design parameters to help compare candidates before detailed CFD analysis.',
+      },
+      {
+        title: 'My role',
+        text: 'I led the five-person team and built the React and Three.js interface, connected FastAPI to ML inference, and deployed the service on Google Cloud.',
+      },
+      {
+        title: 'The outcome',
+        text: 'The project placed 3rd overall out of 296 submissions and won Best Use of Machine Learning at ML Empowerment Build Challenge 2.0. It also placed 3rd in the separate QI AI Entrepreneurship Hackathon.',
+      },
+    ],
+    link: { label: 'Read award coverage', url: korean[2].link!.url },
+  },
+  {
+    ...korean[3],
+    name: 'ENS CFD Research',
+    category: 'Research · Fluid simulation',
+    period: '2025.11 — Present',
+    description: 'Studying how nasal geometry changes affect airflow and wall shear stress.',
+    role: 'Undergraduate researcher · Kyonggi University CFD Lab',
+    details: [
+      {
+        title: 'Research topic',
+        text: 'I study the relationship between pre- and postoperative nasal geometry and intranasal wall shear stress in a patient with empty nose syndrome (ENS).',
+      },
+      {
+        title: 'My role',
+        text: 'I reconstruct CT-based geometry using 3D Slicer and SpaceClaim and analyze airflow with Ansys Fluent.',
+      },
+      {
+        title: 'The lab',
+        text: 'I work as an undergraduate research assistant in Prof. Hyung Min Kim’s CFD lab, Department of Mechanical Systems Engineering at Kyonggi University.',
+      },
+    ],
+  },
+  {
+    ...korean[4],
+    category: 'Drones · Design platform',
+    description:
+      'A drone design platform that infers flight performance from dimensions, speed, and rotor count.',
+    details: [
+      {
+        title: 'Set design parameters',
+        text: 'Configure the drone’s dimensions, speed, rotor count, and other design conditions.',
+      },
+      {
+        title: 'Explore flight performance',
+        text: 'The platform uses those design conditions to infer the drone’s flight performance.',
+      },
+    ],
+  },
+];
 
-const koreanContent: PortfolioContent = { projects, experiences, awards, skills };
-
-const englishContent: PortfolioContent = {
-  projects: [
-    {
-      ...projects[0],
-      subtitle: 'AI-powered vehicle drag prediction',
-      role: 'Team lead of 5 · Web development · Cloud deployment',
-      status: '3rd place in global hackathons',
-      description:
-        'From 3D vehicle geometry to drag prediction. I brought an AI model into an accessible, interactive web experience.',
-      summary:
-        'Early vehicle design calls for quick comparisons across many shapes. We built an AI web service that predicts the drag coefficient (Cd) from 3D geometry and design parameters, helping explore candidates before detailed CFD analysis.',
-      work: [
-        'Led a team of five, coordinating product planning and implementation scope.',
-        'Built an interface for exploring 3D geometry with React and Three.js.',
-        'Connected FastAPI REST APIs to the ML inference workflow and deployed the service on Google Cloud.',
-      ],
-      takeaway:
-        'Placed 3rd overall out of 296 submissions and won Best Use of Machine Learning at ML Empowerment Build Challenge 2.0. The project also placed 3rd in the separate QI AI Entrepreneurship Hackathon.',
-      link: { label: 'Read the award coverage', url: projects[0].link!.url },
-    },
-    {
-      ...projects[1],
-      subtitle: 'Industrial safety monitoring with CCTV',
-      period: '2026.01 — Present',
-      role: 'Team lead · MVP planning · Detection workflow design',
-      status: 'In development',
-      description:
-        'Adding visual intelligence to existing CCTV. We are developing an accessible safety system for small manufacturing sites.',
-      summary:
-        'We are developing a low-cost industrial safety system that combines object detection, risk scoring, and alerts, helping small manufacturers identify safety risks through their existing CCTV cameras.',
-      work: [
-        'Lead the team, defining the core problem and MVP scope while coordinating development.',
-        'Design risk scoring and alert workflows around YOLO object detection.',
-        'Define evaluation criteria that account for detection errors, latency, and deployment constraints.',
-      ],
-      takeaway:
-        'Beyond detection performance, I consider the costs and response workflows that sites can realistically support. The system is in development; no production outcomes or field validation metrics have been published.',
-    },
-    {
-      ...projects[2],
-      subtitle: 'An evidence-based housing document assistant',
-      role: 'Web application development',
-      status: 'Research prototype',
-      description:
-        'A clearer way to understand complex paperwork. The app helps users verify source evidence and organize the information they need.',
-      summary:
-        'A prototype that helps users understand and prepare documents for housing applications in LA. It extracts information from synthetic documents, presents the supporting source evidence for user review, and exports preparation materials after confirmation.',
-      work: [
-        'Built the document upload and review interface with Next.js and TypeScript.',
-        'Connected document processing with PDF.js and Tesseract.js to an AI extraction workflow.',
-        'Displayed the source evidence for extracted information and required user confirmation before exporting preparation materials.',
-      ],
-      takeaway:
-        'Users should be able to verify AI-generated results for themselves. This research prototype uses synthetic data; it does not determine actual housing eligibility or predict selection outcomes.',
-      link: { label: 'View code on GitHub', url: projects[2].link!.url },
-    },
-  ],
-  experiences: [
-    {
-      ...experiences[0],
-      date: '2026.05 — Present',
-      title: 'Turning user constraints into system requirements',
-      organization: 'Siwa Information · Industry–university software project',
-      description:
-        'I analyze friction in course registration, translate enrollment conditions and rules into technical requirements, and contribute to system improvements.',
-    },
-    {
-      ...experiences[1],
-      date: '2025.11 — Present',
-      title: 'Understanding human breathing through data',
-      organization:
-        'Kyonggi University, Mechanical Systems Engineering · Undergraduate CFD researcher',
-      description:
-        'I reconstruct CT-based nasal geometry with 3D Slicer and SpaceClaim and analyze airflow with Ansys Fluent. My research examines changes in nasal geometry and wall shear stress before and after surgery in a patient with empty nose syndrome (ENS).',
-    },
-    {
-      ...experiences[2],
-      title: 'Learning business by building and running one',
-      organization: 'Online automotive accessories store · Founder and operator',
-      description:
-        'I ran sourcing, pricing, inventory, shipping, customer support, and settlement across four Korean marketplaces. This experience taught me to consider both user needs and operational challenges.',
-    },
-  ],
-  awards: [
-    {
-      ...awards[0],
-      detail: '3rd overall · Best Use of Machine Learning',
-      extra: '296 submissions · 1,184 participants',
-    },
-    {
-      ...awards[1],
-      detail: '3rd place · Qualcomm Institute at UC San Diego',
-    },
-    {
-      ...awards[2],
-      title: 'RISE Startup Competition',
-      detail: 'Excellence Award · Kyonggi University RISE Project Team',
-      extra: 'CFD-based medical startup concept',
-    },
-  ],
-  skills: [
-    {
-      ...skills[0],
-      description: 'Understanding data and connecting model outputs to practical user workflows.',
-    },
-    {
-      ...skills[1],
-      description: 'Building the complete service, from interfaces and APIs to cloud deployment.',
-    },
-    {
-      ...skills[2],
-      description: 'Modeling physical phenomena and testing hypotheses through simulation.',
-    },
-  ],
-};
-
-export function getContent(language: 'ko' | 'en'): PortfolioContent {
-  return language === 'en' ? englishContent : koreanContent;
+export function getExperiences(language: 'ko' | 'en') {
+  return language === 'ko' ? korean : english;
 }
