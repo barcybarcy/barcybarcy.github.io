@@ -1,10 +1,8 @@
+import { useLanguage } from '../i18n';
 export default function FlowGraphic() {
+  const { t } = useLanguage();
   return (
-    <div
-      className="flow-graphic"
-      aria-label="AI, 소프트웨어, 엔지니어링을 연결하는 개념 일러스트"
-      role="img"
-    >
+    <div className="flow-graphic" aria-label={t.flowAlt} role="img">
       <div className="flow-grid" />
       <div className="orbit orbit-one" />
       <div className="orbit orbit-two" />

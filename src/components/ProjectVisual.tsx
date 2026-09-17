@@ -1,3 +1,4 @@
+import { useLanguage } from '../i18n';
 import { useId } from 'react';
 
 type ProjectVisualProps = {
@@ -6,6 +7,7 @@ type ProjectVisualProps = {
 
 /** Original, conceptual diagrams for the portfolio's project covers. */
 export function ProjectVisual({ kind }: ProjectVisualProps) {
+  const { t } = useLanguage();
   const instanceId = useId();
 
   if (kind === 'aero') {
@@ -15,7 +17,7 @@ export function ProjectVisual({ kind }: ProjectVisualProps) {
         width="100%"
         height="100%"
         role="img"
-        aria-label="자동차 형상 주위의 유동을 표현한 공기역학 예측 프로젝트 개념도"
+        aria-label={t.aeroAlt}
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -152,7 +154,7 @@ export function ProjectVisual({ kind }: ProjectVisualProps) {
         width="100%"
         height="100%"
         role="img"
-        aria-label="산업 현장 속 작업자와 감지 영역을 표현한 영상 기반 안전 모니터링 프로젝트 개념도"
+        aria-label={t.safetyAlt}
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -277,7 +279,7 @@ export function ProjectVisual({ kind }: ProjectVisualProps) {
       width="100%"
       height="100%"
       role="img"
-      aria-label="열린 문과 문서 속 근거 표시를 표현한 주거 문서 검토 도우미 프로젝트 개념도"
+      aria-label={t.realdoorAlt}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>

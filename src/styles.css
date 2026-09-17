@@ -2832,3 +2832,135 @@ h2 {
   outline: 3px solid var(--blue);
   outline-offset: 5px;
 }
+
+/* Language controls stay visible independently of the mobile navigation. */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 24px;
+  flex-shrink: 0;
+}
+.navigation {
+  margin-left: auto;
+}
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: 9px;
+  letter-spacing: 0.4px;
+}
+.language-switch > button {
+  background: transparent;
+  color: #65705e;
+  padding: 7px 6px;
+  min-height: 30px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+.language-switch > button[aria-pressed='true'] {
+  background: var(--ink);
+  color: white;
+}
+.language-switch > button:hover:not([aria-pressed='true']) {
+  color: var(--blue);
+}
+.language-switch > span {
+  color: #a0a899;
+  padding-inline: 1px;
+}
+:lang(en) .hero h1 {
+  font-size: clamp(34px, 4.2vw, 59px);
+  letter-spacing: -2px;
+}
+:lang(en) .about-keywords {
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+:lang(en) .education-meta {
+  flex-wrap: wrap;
+}
+:lang(en) .contact-section h2 {
+  font-size: clamp(36px, 4.2vw, 54px);
+}
+:lang(en) .project-subtitle {
+  min-height: 2.8em;
+}
+@media (max-width: 1100px) {
+  .header-actions {
+    margin-left: 18px;
+  }
+  .navigation {
+    gap: 20px;
+  }
+}
+@media (max-width: 800px) {
+  .header-actions {
+    margin-left: 16px;
+  }
+  .navigation {
+    gap: 16px;
+  }
+  :lang(en) .about-grid h2 {
+    font-size: 27px;
+  }
+  :lang(en) .experience-intro h2 {
+    font-size: 27px;
+  }
+}
+@media (max-width: 600px) {
+  .header-actions {
+    margin-left: auto;
+    gap: 10px;
+  }
+  .brand-portfolio,
+  .brand-slash {
+    display: none;
+  }
+  .language-switch > button {
+    min-width: 32px;
+    min-height: 34px;
+  }
+  .navigation {
+    margin-left: 0;
+    gap: 0;
+  }
+  :lang(en) .hero h1 {
+    font-size: clamp(30px, 8.5vw, 50px);
+    letter-spacing: -1.5px;
+  }
+  :lang(en) .hero-description {
+    max-width: 350px;
+  }
+  :lang(en) .hero-description br {
+    display: none;
+  }
+  :lang(en) .hero-bottom > span:first-child {
+    font-size: 8px;
+  }
+  :lang(en) .hero-bottom {
+    flex-wrap: wrap;
+  }
+  :lang(en) .about-grid h2 {
+    font-size: 29px;
+  }
+  :lang(en) .section-heading h2 {
+    font-size: 29px;
+  }
+  :lang(en) .experience-intro h2 {
+    font-size: 29px;
+  }
+  :lang(en) .contact-section h2 {
+    font-size: clamp(30px, 8vw, 42px);
+    letter-spacing: -1.4px;
+  }
+  :lang(en) .project-subtitle {
+    min-height: 0;
+  }
+}

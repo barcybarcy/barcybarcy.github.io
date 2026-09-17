@@ -176,3 +176,132 @@ export const skills = [
     items: ['3D Slicer', 'SpaceClaim', 'Ansys Fluent', 'Tecplot', 'CFD'],
   },
 ];
+
+type PortfolioContent = {
+  projects: Project[];
+  experiences: typeof experiences;
+  awards: typeof awards;
+  skills: typeof skills;
+};
+
+const koreanContent: PortfolioContent = { projects, experiences, awards, skills };
+
+const englishContent: PortfolioContent = {
+  projects: [
+    {
+      ...projects[0],
+      subtitle: 'AI-powered vehicle drag prediction',
+      role: 'Team lead of 5 · Web development · Cloud deployment',
+      status: '3rd place in global hackathons',
+      description:
+        'From 3D vehicle geometry to drag prediction. I brought an AI model into an accessible, interactive web experience.',
+      summary:
+        'Early vehicle design calls for quick comparisons across many shapes. We built an AI web service that predicts the drag coefficient (Cd) from 3D geometry and design parameters, helping explore candidates before detailed CFD analysis.',
+      work: [
+        'Led a team of five, coordinating product planning and implementation scope.',
+        'Built an interface for exploring 3D geometry with React and Three.js.',
+        'Connected FastAPI REST APIs to the ML inference workflow and deployed the service on Google Cloud.',
+      ],
+      takeaway:
+        'Placed 3rd overall out of 296 submissions and won Best Use of Machine Learning at ML Empowerment Build Challenge 2.0. The project also placed 3rd in the separate QI AI Entrepreneurship Hackathon.',
+      link: { label: 'Read the award coverage', url: projects[0].link!.url },
+    },
+    {
+      ...projects[1],
+      subtitle: 'Industrial safety monitoring with CCTV',
+      period: '2026.01 — Present',
+      role: 'Team lead · MVP planning · Detection workflow design',
+      status: 'In development',
+      description:
+        'Adding visual intelligence to existing CCTV. We are developing an accessible safety system for small manufacturing sites.',
+      summary:
+        'We are developing a low-cost industrial safety system that combines object detection, risk scoring, and alerts, helping small manufacturers identify safety risks through their existing CCTV cameras.',
+      work: [
+        'Lead the team, defining the core problem and MVP scope while coordinating development.',
+        'Design risk scoring and alert workflows around YOLO object detection.',
+        'Define evaluation criteria that account for detection errors, latency, and deployment constraints.',
+      ],
+      takeaway:
+        'Beyond detection performance, I consider the costs and response workflows that sites can realistically support. The system is in development; no production outcomes or field validation metrics have been published.',
+    },
+    {
+      ...projects[2],
+      subtitle: 'An evidence-based housing document assistant',
+      role: 'Web application development',
+      status: 'Research prototype',
+      description:
+        'A clearer way to understand complex paperwork. The app helps users verify source evidence and organize the information they need.',
+      summary:
+        'A prototype that helps users understand and prepare documents for housing applications in LA. It extracts information from synthetic documents, presents the supporting source evidence for user review, and exports preparation materials after confirmation.',
+      work: [
+        'Built the document upload and review interface with Next.js and TypeScript.',
+        'Connected document processing with PDF.js and Tesseract.js to an AI extraction workflow.',
+        'Displayed the source evidence for extracted information and required user confirmation before exporting preparation materials.',
+      ],
+      takeaway:
+        'Users should be able to verify AI-generated results for themselves. This research prototype uses synthetic data; it does not determine actual housing eligibility or predict selection outcomes.',
+      link: { label: 'View code on GitHub', url: projects[2].link!.url },
+    },
+  ],
+  experiences: [
+    {
+      ...experiences[0],
+      date: '2026.05 — Present',
+      title: 'Turning user constraints into system requirements',
+      organization: 'Siwa Information · Industry–university software project',
+      description:
+        'I analyze friction in course registration, translate enrollment conditions and rules into technical requirements, and contribute to system improvements.',
+    },
+    {
+      ...experiences[1],
+      date: '2025.11 — Present',
+      title: 'Understanding human breathing through data',
+      organization:
+        'Kyonggi University, Mechanical Systems Engineering · Undergraduate CFD researcher',
+      description:
+        'I reconstruct CT-based nasal geometry with 3D Slicer and SpaceClaim and analyze airflow with Ansys Fluent. My research examines changes in nasal geometry and wall shear stress before and after surgery in a patient with empty nose syndrome (ENS).',
+    },
+    {
+      ...experiences[2],
+      title: 'Learning business by building and running one',
+      organization: 'Online automotive accessories store · Founder and operator',
+      description:
+        'I ran sourcing, pricing, inventory, shipping, customer support, and settlement across four Korean marketplaces. This experience taught me to consider both user needs and operational challenges.',
+    },
+  ],
+  awards: [
+    {
+      ...awards[0],
+      detail: '3rd overall · Best Use of Machine Learning',
+      extra: '296 submissions · 1,184 participants',
+    },
+    {
+      ...awards[1],
+      detail: '3rd place · Qualcomm Institute at UC San Diego',
+    },
+    {
+      ...awards[2],
+      title: 'RISE Startup Competition',
+      detail: 'Excellence Award · Kyonggi University RISE Project Team',
+      extra: 'CFD-based medical startup concept',
+    },
+  ],
+  skills: [
+    {
+      ...skills[0],
+      description: 'Understanding data and connecting model outputs to practical user workflows.',
+    },
+    {
+      ...skills[1],
+      description: 'Building the complete service, from interfaces and APIs to cloud deployment.',
+    },
+    {
+      ...skills[2],
+      description: 'Modeling physical phenomena and testing hypotheses through simulation.',
+    },
+  ],
+};
+
+export function getContent(language: 'ko' | 'en'): PortfolioContent {
+  return language === 'en' ? englishContent : koreanContent;
+}

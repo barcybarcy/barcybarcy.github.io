@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { awards, experiences, profile, projects, skills } from './data';
+import { getContent, profile } from './data';
+import { LanguageSwitch, useLanguage } from './i18n';
 import type { Project } from './data';
 import FlowGraphic from './components/FlowGraphic';
 import { ProjectVisual } from './components/ProjectVisual';
@@ -33,23 +34,18 @@ function ExternalLink({
   children: ReactNode;
   className?: string;
 }) {
+  const { t } = useLanguage();
   return (
     <a className={className} href={href} target="_blank" rel="noreferrer">
       {children}
       <Arrow diagonal />
-      <span className="sr-only"> (새 탭)</span>
+      <span className="sr-only"> ({t.newTab})</span>
     </a>
   );
 }
 
-const navigation = [
-  { id: 'about', label: '소개' },
-  { id: 'projects', label: '프로젝트' },
-  { id: 'experience', label: '경험' },
-  { id: 'skills', label: '역량' },
-];
-
 function ProjectDialog({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  const { t } = useLanguage();
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -83,12 +79,7 @@ function ProjectDialog({ project, onClose }: { project: Project | null; onClose:
     >
       {project && (
         <>
-          <button
-            className="dialog-close"
-            onClick={onClose}
-            aria-label="프로젝트 상세 닫기"
-            autoFocus
-          >
+          <button className="dialog-close" onClick={onClose} aria-label={t.closeProject} autoFocus>
             <span aria-hidden="true">×</span>
           </button>
           <div className={`dialog-visual ${project.kind}`}>
@@ -104,15 +95,15 @@ function ProjectDialog({ project, onClose }: { project: Project | null; onClose:
               <span>{project.period}</span>
               <span>{project.role}</span>
             </div>
-            <h3>어떤 문제를 풀었나요?</h3>
+            <h3>{t.problem}</h3>
             <p>{project.summary}</p>
-            <h3>제가 맡은 일</h3>
+            <h3>{t.contribution}</h3>
             <ul>
               {project.work.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <h3>결과와 고민</h3>
+            <h3>{t.outcome}</h3>
             <p>{project.takeaway}</p>
             <div className="tags">
               {project.tags.map((tag) => (
@@ -132,11 +123,20 @@ function ProjectDialog({ project, onClose }: { project: Project | null; onClose:
 }
 
 function App() {
+  const { language, t } = useLanguage();
+  const { projects, experiences, awards, skills } = getContent(language);
+  const navigation = [
+    { id: 'about', label: t.navAbout },
+    { id: 'projects', label: t.navProjects },
+    { id: 'experience', label: t.navExperience },
+    { id: 'skills', label: t.navSkills },
+  ];
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const [filter, setFilter] = useState('전체');
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [copyStatus, setCopyStatus] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const selectedProject = projects.find((project) => project.id === selectedProjectId) ?? null;
+  const [copyStatus, setCopyStatus] = useState<'' | 'success' | 'error'>('');
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -170,24 +170,24 @@ function App() {
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText(profile.email);
-      setCopyStatus('이메일 주소를 복사했어요.');
+      setCopyStatus('success');
     } catch {
-      setCopyStatus('복사하지 못했어요. 이메일 주소를 직접 선택해 주세요.');
+      setCopyStatus('error');
     }
   }
 
   const visibleProjects = projects.filter(
-    (project) => filter === '전체' || project.category === filter,
+    (project) => filter === 'all' || project.category === filter,
   );
 
   return (
     <>
       <a className="skip-link" href="#main">
-        본문으로 바로가기
+        {t.skip}
       </a>
       <div className="reading-progress" style={{ transform: `scaleX(${progress})` }} />
       <header className="header">
-        <a className="brand" href="#home" aria-label="조수민 포트폴리오 처음으로">
+        <a className="brand" href="#home" aria-label={t.home}>
           <span className="brand-mark">
             s<span>.</span>
           </span>
@@ -196,21 +196,10 @@ function App() {
             <span className="brand-portfolio">PORTFOLIO</span>
           </span>
         </a>
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="main-nav"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
-        >
-          <span />
-          <span />
-        </button>
         <nav
           id="main-nav"
           className={menuOpen ? 'navigation open' : 'navigation'}
-          aria-label="주 메뉴"
+          aria-label={t.menu}
         >
           {navigation.map((item) => (
             <a
@@ -224,9 +213,23 @@ function App() {
             </a>
           ))}
           <a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>
-            연락하기 <Arrow diagonal />
+            {t.navContact} <Arrow diagonal />
           </a>
         </nav>
+        <div className="header-actions">
+          <LanguageSwitch />
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="main-nav"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? t.menuClose : t.menuOpen}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
       </header>
 
       <main id="main">
@@ -236,21 +239,22 @@ function App() {
               <span className="live-dot" /> AI & SOFTWARE ENGINEER
             </div>
             <h1>
-              현실의 문제를,
-              <br />
-              <span className="hero-highlight">쓰이는 기술로.</span>
+              {t.heroLine1}
+              <br /> <span className="hero-highlight">{t.heroLine2}</span>
             </h1>
             <p className="hero-name">
-              안녕하세요, 개발자 <strong>조수민</strong>입니다<span className="text-blue">.</span>
+              {t.greeting}
+              <strong>{t.name}</strong>
+              {t.greetingEnd}
+              <span className="text-blue">.</span>
             </p>
             <p className="hero-description">
-              AI 모델을 서비스로, 연구를 더 나은 경험으로.
-              <br />
-              문제를 발견하는 순간부터 직접 만들고 연결합니다.
+              {t.heroDescription1}
+              <br /> {t.heroDescription2}
             </p>
             <div className="hero-actions">
               <a className="button button-dark" href="#projects">
-                프로젝트 둘러보기 <Arrow />
+                {t.explore} <Arrow />
               </a>
               <ExternalLink className="hero-github" href={profile.github}>
                 GitHub
@@ -260,7 +264,7 @@ function App() {
           <FlowGraphic />
           <div className="hero-bottom">
             <span>
-              <span className="small-cross">✳</span> 경계를 넘어 연결하는 개발자
+              <span className="small-cross">✳</span> {t.tagline}
             </span>
             <a href="#about">
               SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
@@ -273,8 +277,7 @@ function App() {
           <div className="section-width credential-inner">
             <span>
               BUILDING WITH
-              <br />
-              <strong>CURIOSITY & PURPOSE</strong>
+              <br /> <strong>CURIOSITY & PURPOSE</strong>
             </span>
             <div>
               <span className="credential-symbol">↗</span>
@@ -305,9 +308,9 @@ function App() {
           <div className="about-grid">
             <div>
               <h2>
-                기술에 대한 호기심,
-                <br />
-                문제에 대한 <span className="serif-word">진심.</span>
+                {t.aboutLine1}
+                <br /> {t.aboutLine2}
+                <span className="serif-word">{t.aboutHighlight}</span>
               </h2>
               <div className="about-signature">
                 Sumin Cho <span>↗</span>
@@ -315,23 +318,15 @@ function App() {
             </div>
             <div className="about-copy">
               <p>
-                직접 비즈니스를 운영하며 배웠습니다.
-                <br />
-                <strong>좋은 기술은 실제 문제를 이해하는 데서 시작한다는 것.</strong>
+                {t.aboutIntro}
+                <br /> <strong>{t.aboutBelief}</strong>
               </p>
-              <p>
-                4개 마켓플레이스의 고객과 상품을 만났던 경험은, 지금도 코드를 작성하기 전에
-                ‘누구에게 필요한가’를 먼저 묻게 합니다.
-              </p>
-              <p>
-                컴퓨터공학을 기반으로 AI 웹서비스를 만들고, CFD 연구실에서 유체의 흐름을 분석합니다.
-                서로 다른 분야에서 얻은 관점을 연결해, 복잡한 문제를 쓸 수 있는 형태로 바꾸는 일을
-                좋아합니다.
-              </p>
+              <p>{t.aboutBusiness}</p>
+              <p>{t.aboutResearch}</p>
               <div className="about-keywords">
-                <span>문제에서 출발하고</span>
-                <span>직접 만들고</span>
-                <span>끝까지 연결합니다</span>
+                {t.aboutKeywords.map((keyword) => (
+                  <span key={keyword}>{keyword}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -347,21 +342,21 @@ function App() {
             <div className="section-heading">
               <div>
                 <h2>
-                  생각을 넘어,
-                  <br className="mobile-break" /> 직접 만든 것들<span className="text-blue">.</span>
+                  {t.workLine1} {t.workLine2}
+                  <span className="text-blue">.</span>
                 </h2>
-                <p>아이디어가 작동하는 경험이 되기까지의 기록입니다.</p>
+                <p>{t.workDescription}</p>
               </div>
-              <div className="project-filters" role="group" aria-label="프로젝트 분야 필터">
-                {['전체', 'AI & ML', 'Full-stack'].map((item) => (
+              <div className="project-filters" role="group" aria-label={t.filterLabel}>
+                {['all', 'AI & ML', 'Full-stack'].map((item) => (
                   <button
                     key={item}
                     aria-pressed={filter === item}
                     className={filter === item ? 'selected' : ''}
                     onClick={() => setFilter(item)}
                   >
-                    {item}
-                    {item === '전체' && <span>03</span>}
+                    {item === 'all' ? t.all : item}
+                    {item === 'all' && <span>03</span>}
                   </button>
                 ))}
               </div>
@@ -388,8 +383,8 @@ function App() {
                       <h3>
                         <button
                           className="project-open"
-                          aria-label={`${project.name} 프로젝트 상세 보기`}
-                          onClick={() => setSelectedProject(project)}
+                          aria-label={`${project.name} ${t.projectDetails}`}
+                          onClick={() => setSelectedProjectId(project.id)}
                         >
                           {project.name}
                           <Arrow diagonal />
@@ -405,7 +400,7 @@ function App() {
                       <div className="project-bottom">
                         <span>{project.period}</span>
                         <span>
-                          프로젝트 이야기 <span aria-hidden="true">+</span>
+                          {t.projectStory} <span aria-hidden="true">+</span>
                         </span>
                       </div>
                     </div>
@@ -415,10 +410,12 @@ function App() {
             </div>
             <div className="projects-footnote">
               <span role="status" aria-live="polite">
-                {visibleProjects.length}개의 프로젝트 · 이미지는 프로젝트를 표현한 컨셉
-                일러스트입니다.
+                {visibleProjects.length}
+                {language === 'en' && visibleProjects.length === 1
+                  ? ' project'
+                  : t.projectCount} · {t.illustrationNote}
               </span>
-              <ExternalLink href={profile.github}>더 많은 코드 살펴보기</ExternalLink>
+              <ExternalLink href={profile.github}>{t.moreCode}</ExternalLink>
             </div>
             <div className="more-work">
               <span className="eyebrow">ALSO BUILT</span>
@@ -440,16 +437,13 @@ function App() {
           <div className="experience-layout">
             <div className="experience-intro">
               <h2>
-                다양한 경험이
-                <br />
-                하나의 방향으로.
+                {t.journeyLine1}
+                <br /> {t.journeyLine2}
               </h2>
               <p>
-                비즈니스, 연구, 소프트웨어.
-                <br />
-                각각의 경험에서 배운 것을
-                <br />
-                다음 문제를 푸는 데 가져갑니다.
+                {t.journeyDescription1}
+                <br /> {t.journeyDescription2}
+                <br /> {t.journeyDescription3}
               </p>
               <span className="journey-decoration" aria-hidden="true">
                 ↘
@@ -471,7 +465,7 @@ function App() {
           </div>
           <div className="awards-heading">
             <span className="eyebrow">A FEW MILESTONES</span>
-            <h3>함께 만들어낸 성과</h3>
+            <h3>{t.awardsHeading}</h3>
           </div>
           <div className="awards-list">
             {awards.map((award, index) => (
@@ -487,7 +481,9 @@ function App() {
                 <span className="award-date">{award.date}</span>
                 {award.url ? (
                   <ExternalLink className="award-link" href={award.url}>
-                    <span className="sr-only">{award.title} 수상 기사</span>
+                    <span className="sr-only">
+                      {award.title} {t.awardArticle}
+                    </span>
                   </ExternalLink>
                 ) : (
                   <span className="award-link" />
@@ -506,9 +502,10 @@ function App() {
             <div className="section-heading">
               <div>
                 <h2>
-                  아이디어를 구현하는 도구들<span className="text-blue">.</span>
+                  {t.skillsHeading}
+                  <span className="text-blue">.</span>
                 </h2>
-                <p>필요한 기술을 배우고, 문제에 맞는 도구를 선택합니다.</p>
+                <p>{t.skillsDescription}</p>
               </div>
             </div>
             <div className="skills-grid">
@@ -531,10 +528,10 @@ function App() {
             <div className="education-grid">
               <article>
                 <span className="eyebrow">EDUCATION</span>
-                <h3>경기대학교</h3>
-                <p>컴퓨터공학 학사 과정</p>
+                <h3>{t.university}</h3>
+                <p>{t.degree}</p>
                 <div className="education-meta">
-                  <span>2027.03 졸업 예정</span>
+                  <span>{t.graduation}</span>
                   <strong>
                     GPA 4.05 <span>/ 4.5</span>
                   </strong>
@@ -556,8 +553,7 @@ function App() {
                 </span>
                 <h3>
                   Professional
-                  <br />
-                  Machine Learning Engineer
+                  <br /> Machine Learning Engineer
                 </h3>
                 <p>Google Cloud Certified · 2026.08</p>
               </article>
@@ -575,22 +571,21 @@ function App() {
             </span>
           </div>
           <h2>
-            다음 이야기는,
-            <br />
-            함께 만들어볼까요<span className="text-blue">?</span>
+            {t.contactLine1}
+            <br /> {t.contactLine2}
+            <span className="text-blue">{t.contactPunctuation}</span>
           </h2>
           <div className="contact-bottom">
             <p>
-              프로젝트 이야기부터 새로운 기회까지.
-              <br />
-              편하게 연락 주세요.
+              {t.contactDescription1}
+              <br /> {t.contactDescription2}
             </p>
             <div className="contact-email">
               <a href={`mailto:${profile.email}`}>
                 {profile.email}
                 <Arrow diagonal />
               </a>
-              <button type="button" onClick={copyEmail} aria-label="이메일 주소 복사">
+              <button type="button" onClick={copyEmail} aria-label={t.copyEmail}>
                 <svg
                   viewBox="0 0 24 24"
                   className="icon"
@@ -606,7 +601,7 @@ function App() {
             </div>
           </div>
           <div className="copy-status" role="status" aria-live="polite">
-            {copyStatus}
+            {copyStatus === 'success' ? t.copySuccess : copyStatus === 'error' ? t.copyError : ''}
           </div>
         </section>
       </main>
@@ -619,12 +614,12 @@ function App() {
         <div>
           <ExternalLink href={profile.github}>GitHub</ExternalLink>
           <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
-          <a href="#home" aria-label="맨 위로">
+          <a href="#home" aria-label={t.backToTop}>
             ↑
           </a>
         </div>
       </footer>
-      <ProjectDialog project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectDialog project={selectedProject} onClose={() => setSelectedProjectId(null)} />
     </>
   );
 }
