@@ -123,12 +123,7 @@ function ExperienceItem({
           <p className="experience-description">{experience.description || t.pending}</p>
           <div className="experience-overview">
             {images.length > 0 ? (
-              <ExperienceGallery
-                name={experience.name}
-                images={images}
-                expanded={open}
-                onToggle={onToggle}
-              />
+              <ExperienceGallery name={experience.name} images={images} />
             ) : (
               <figure
                 className={`experience-cover cover-${experience.id}`}
@@ -138,7 +133,7 @@ function ExperienceItem({
                 <ExperienceCover kind={experience.id} />
               </figure>
             )}
-            <div className={`experience-facts${images.length <= 1 ? ' has-action' : ''}`}>
+            <div className="experience-facts">
               {experience.role && (
                 <div>
                   <span className="fact-label">{t.role}</span>
@@ -155,17 +150,11 @@ function ExperienceItem({
                   </div>
                 </div>
               )}
-              {hasDetails && images.length <= 1 && (
-                <button
-                  type="button"
-                  className="explore-story"
-                  aria-expanded={open}
-                  aria-controls={`detail-${experience.id}`}
-                  onClick={onToggle}
-                >
+              {hasDetails && (
+                <span className="explore-story">
                   {open ? t.closeDetails : t.openDetails}
                   <span aria-hidden="true">{open ? '−' : '↗'}</span>
-                </button>
+                </span>
               )}
             </div>
           </div>

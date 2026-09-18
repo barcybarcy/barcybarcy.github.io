@@ -401,7 +401,6 @@ h4 {
   color: var(--green-dark);
 }
 .experiences-section {
-  max-width: 1120px;
   padding-top: 35px;
   padding-bottom: 76px;
 }
@@ -422,7 +421,7 @@ h4 {
   display: grid;
   grid-template-columns: 60px minmax(0, 1fr);
   gap: 20px;
-  padding-block: 44px;
+  padding-block: 36px;
   border-bottom: 1px solid var(--line);
 }
 .experience-index {
@@ -457,7 +456,7 @@ h4 {
   font-variant-numeric: tabular-nums;
 }
 .experience-item h3 {
-  font-size: 30px;
+  font-size: 26px;
   line-height: 1.5;
   letter-spacing: -0.9px;
   font-weight: 750;
@@ -473,18 +472,26 @@ h4 {
   font: inherit;
   letter-spacing: inherit;
   background: transparent;
-  min-height: 44px;
-  border-radius: 6px;
+}
+.experience-trigger::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  z-index: 1;
+  border-radius: 8px;
 }
 .experience-trigger:focus-visible {
+  outline: 0;
+}
+.experience-trigger:focus-visible::after {
   outline: 3px solid var(--green-dark);
-  outline-offset: 5px;
+  outline-offset: 2px;
 }
 .expand-icon {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   font-size: 25px;
   font-weight: 400;
@@ -497,13 +504,13 @@ h4 {
     color 0.2s,
     transform 0.2s;
 }
-.experience-trigger:hover .expand-icon,
+.is-interactive:hover .expand-icon,
 .is-open .expand-icon {
   background: var(--green);
   color: #121212;
 }
 .experience-description {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.9;
   color: #686868;
   margin-top: 6px;
@@ -512,14 +519,15 @@ h4 {
 }
 .experience-overview {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
-  margin-top: 24px;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  margin-top: 21px;
 }
 .experience-cover {
   width: 100%;
   aspect-ratio: 5/3;
-  border-radius: 16px;
+  border-radius: 9px;
   overflow: hidden;
   background: #fafafa;
   border: 1px solid #eee;
@@ -534,16 +542,9 @@ h4 {
   transform: scale(1.025);
 }
 .experience-facts {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  align-items: start;
-  gap: 20px;
-  min-width: 0;
-}
-.experience-facts.has-action {
-  grid-template-columns: minmax(150px, 1fr) minmax(0, 1.4fr) auto;
-}
-.experience-facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   min-width: 0;
 }
 .fact-label {
@@ -573,24 +574,13 @@ h4 {
   color: #535353;
 }
 .explore-story {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  min-height: 44px;
-  padding: 10px 16px;
-  border: 1px solid #dedede;
-  border-radius: 24px;
-  background: #fff;
-  color: #121212;
-  font-size: 12px;
+  font-size: 11px;
+  color: var(--green-dark);
   font-weight: 650;
   margin-top: 1px;
-  justify-self: end;
-}
-.explore-story:hover {
-  background: var(--green);
-  border-color: var(--green);
 }
 .explore-story > span {
   font-size: 17px;
@@ -788,7 +778,8 @@ h4 {
     padding-inline: 32px;
   }
   .experience-overview {
-    gap: 22px;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 23px;
   }
   .experience-item {
     grid-template-columns: 40px minmax(0, 1fr);
@@ -905,16 +896,8 @@ h4 {
     font-size: 12px;
   }
   .experience-overview {
+    grid-template-columns: 220px 1fr;
     gap: 22px;
-  }
-  .experience-facts,
-  .experience-facts.has-action {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-    gap: 16px;
-  }
-  .explore-story {
-    grid-column: 1 / -1;
-    justify-self: start;
   }
   .experience-facts p {
     font-size: 11px;
@@ -1113,9 +1096,9 @@ h4 {
     letter-spacing: -0.9px;
   }
   .expand-icon {
-    height: 44px;
-    width: 44px;
-    font-size: 24px;
+    height: 28px;
+    width: 28px;
+    font-size: 21px;
   }
   .experience-description {
     font-size: 12px;
@@ -1130,10 +1113,10 @@ h4 {
   }
   .experience-cover {
     aspect-ratio: 5/3;
-    border-radius: 12px;
+    max-width: 480px;
+    border-radius: 8px;
   }
-  .experience-facts,
-  .experience-facts.has-action {
+  .experience-facts {
     display: grid;
     grid-template-columns: 1fr;
     gap: 11px;
@@ -1160,12 +1143,15 @@ h4 {
   }
   .explore-story {
     margin-top: 3px;
-    font-size: 12px;
+    font-size: 10px;
     gap: 8px;
     justify-content: flex-start;
   }
   .explore-story > span {
     font-size: 15px;
+  }
+  .experience-trigger::after {
+    inset: -8px;
   }
   .experience-detail {
     padding-top: 21px;
@@ -1316,6 +1302,9 @@ h4 {
     break-inside: avoid;
     padding-block: 25px;
   }
+  .experience-trigger::after {
+    display: none;
+  }
   .experience-detail[hidden] {
     display: block;
   }
@@ -1323,7 +1312,7 @@ h4 {
     display: none;
   }
   .experience-overview {
-    grid-template-columns: 1fr;
+    grid-template-columns: 180px 1fr;
   }
   .section-intro {
     margin-bottom: 20px;

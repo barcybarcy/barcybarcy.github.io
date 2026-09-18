@@ -30,10 +30,8 @@ npm run preview
 - 기술과 도구는 13개 항목의 아이콘과 이름을 하나의 간결한 목록으로 보여주며 화면 너비에 맞춰 줄바꿈합니다. Google Cloud Professional Machine Learning Engineer 자격과 운전면허는 아래의 작은 행에 함께 표시합니다.
 - 기술·도구와 자격 라벨 옆에 로고 또는 아이콘을 표시합니다. `react-icons`의 정적 import와 로컬 SVG를 사용합니다.
 - 경험은 온라인 쇼핑몰 사업 → BARO → PARAGON → ENS CFD 연구 → DRAWN 순서로 구성합니다.
-- 경험 사진은 본문 전체 폭을 사용하고, 역할과 기술은 사진 아래에 배치합니다. 경험 제목이나 펼치기 버튼으로 상세 내용을 열며 한 번에 하나의 경험이 펼쳐집니다.
-- 사업 2장, BARO 5장, PARAGON 1장, ENS CFD 연구 2장으로 총 10장의 사용자 제공 이미지를 갤러리로 보여줍니다. BARO와 ENS의 수상 사진은 각각 마지막에 배치합니다.
-- 사진이 여러 장인 경험은 펼치기 상태와 연동해 모든 사진을 원본 비율로 보여줍니다. 넓은 화면에서는 2열, 760px 이하에서는 1열로 배치합니다. 접힌 상태에서는 대표 사진과 큰 썸네일, 이전·다음 버튼으로 탐색합니다. 갤러리 내부의 펼치기·접기 버튼을 누르면 변경 후 사진 시작 위치로 이동합니다.
-- 사진을 누르면 어두운 배경의 전체 화면 뷰어가 열립니다. 하단 썸네일은 기본으로 접혀 있으며 상단 `사진 목록 / Image thumbnails` 아이콘 버튼으로 표시할 수 있습니다. 이전·다음 버튼, 좌우 방향키와 모바일 좌우 스와이프로 탐색하고 원본 이미지도 새 탭에서 열 수 있습니다. 닫기 버튼이나 Esc로 닫으면 사진을 열었던 버튼으로 포커스가 돌아갑니다.
+- 경험 제목을 누르면 같은 화면에서 상세 내용이 펼쳐지는 아코디언입니다. 한 번에 하나의 항목이 열립니다.
+- 사업 2장, BARO 5장, PARAGON 1장, ENS CFD 연구 2장으로 총 10장의 사용자 제공 이미지를 갤러리로 보여줍니다. BARO와 ENS의 수상 사진은 각각 마지막에 배치합니다. 썸네일과 이전·다음 버튼으로 탐색하고, 확대 화면에서는 좌우 방향키로 이동하거나 Esc로 닫을 수 있습니다.
 - 상단 KOR / ENG 버튼으로 본문·경험 상세·접근성 문구를 전환합니다. 기본 언어는 한국어이며 선택은 브라우저에 저장됩니다. 저장소 접근이 제한되어도 전환은 동작합니다.
 - 반응형 레이아웃, 섹션 내비게이션, 이메일 복사와 실패 안내, 이메일·GitHub·LinkedIn 링크.
 - 연락처는 `Contact` 제목 아래 이메일·GitHub·LinkedIn 아이콘 버튼을 중심으로 구성합니다.
@@ -52,8 +50,7 @@ npm run preview
 | `src/components/SkillsSection.tsx`     | 기술·도구 단일 목록과 자격·면허 행                                           |
 | `src/components/SkillsSection.css`     | 기술·도구 목록의 간격·줄바꿈과 자격·면허 행 스타일                           |
 | `src/components/SkillIcon.tsx`         | 기술·도구·자격 라벨의 로고와 아이콘                                          |
-| `src/components/ExperienceGallery.tsx` | 펼치기 상태와 연동한 사진 모아보기, 전체 화면 뷰어, 키보드·스와이프 조작     |
-| `src/components/ExperienceGallery.css` | 대표 사진·썸네일 크기, 원본 비율 그리드, 어두운 전체 화면 뷰어 스타일        |
+| `src/components/ExperienceGallery.tsx` | 경험 이미지 갤러리, 썸네일·이전·다음·확대 화면                               |
 | `src/projectImages.ts`                 | 경험별 이미지 순서, 한·영 캡션·대체텍스트, CSS 표시 방식                     |
 | `src/components/ExperienceCover.tsx`   | DRAWN의 SVG 개념 커버                                                        |
 | `public/images/sumin-cho.jpeg`         | 사용자 제공 사진의 원본 복사본. 화면 크기·배치는 CSS로 조정                  |
