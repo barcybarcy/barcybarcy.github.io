@@ -1,0 +1,98 @@
+.compact-skills {
+  padding-block: 28px 30px;
+}
+
+.compact-skills h2 {
+  margin: 0 0 18px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.6px;
+}
+
+.compact-skills .compact-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px 23px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compact-skills .compact-skills-list li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  color: #353535;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.compact-skills li > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.compact-skills .compact-skills-credentials {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  margin-top: 21px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line, #e9e9e9);
+}
+
+.compact-skills .compact-skills-credentials h3 {
+  margin: 1px 0 0;
+  flex-shrink: 0;
+  color: #626262;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.compact-skills .compact-skills-credentials ul {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compact-skills .compact-skills-credentials li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: #626262;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .compact-skills {
+    padding-block: 24px 28px;
+  }
+
+  .compact-skills h2 {
+    margin-bottom: 16px;
+    font-size: 22px;
+  }
+
+  .compact-skills .compact-skills-list {
+    gap: 12px 18px;
+  }
+
+  .compact-skills .compact-skills-list li {
+    font-size: 12px;
+  }
+
+  .compact-skills .compact-skills-credentials {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 19px;
+    padding-top: 12px;
+  }
+}

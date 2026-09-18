@@ -24,10 +24,10 @@ npm run preview
 
 - React + TypeScript + Vite, 별도 서버·데이터베이스·환경변수 없이 실행합니다.
 - 흰색 배경에 Spotify Green 계열의 초록색과 검정색을 사용하고, `SUMIN CHO` 워드마크를 배치했습니다.
-- 한국어·영어 원페이지: 소개와 수상 → 역량·자격·면허 → 대표 경험 5개 → 연락처.
+- 한국어·영어 원페이지: 소개 → 기술과 도구 → 대표 경험 5개 → 수상 경력 → Contact.
 - 소개에는 사용자가 제공한 사진과 자동차용품·액세서리 쇼핑몰 운영에서 개발자로 이어진 이야기를 담았습니다.
-- 최근 성과에는 PARAGON의 두 해커톤 수상, BARO의 2026 캡스톤디자인 경진대회 우수상, ENS CFD 기반 의료 창업 아이디어의 RISE 연합 창업경진대회 우수상 등 4개를 표시합니다.
-- 역량은 기초·비즈니스, 프로그래밍, AI·백엔드, 클라우드, 연구·설계, 크리에이티브의 6개 분류로 구성합니다. Google Cloud Professional Machine Learning Engineer 자격과 운전면허도 이 섹션에 표시합니다.
+- 수상 경력은 대표 경험 다음, Contact 앞에 독립된 `수상 경력 / Awards` 섹션으로 배치합니다. PARAGON의 두 해커톤 수상, BARO의 2026 캡스톤디자인 경진대회 우수상, ENS CFD 기반 의료 창업 아이디어의 RISE 연합 창업경진대회 우수상 등 4개를 표시합니다.
+- 기술과 도구는 13개 항목의 아이콘과 이름을 하나의 간결한 목록으로 보여주며 화면 너비에 맞춰 줄바꿈합니다. Google Cloud Professional Machine Learning Engineer 자격과 운전면허는 아래의 작은 행에 함께 표시합니다.
 - 기술·도구와 자격 라벨 옆에 로고 또는 아이콘을 표시합니다. `react-icons`의 정적 import와 로컬 SVG를 사용합니다.
 - 경험은 온라인 쇼핑몰 사업 → BARO → PARAGON → ENS CFD 연구 → DRAWN 순서로 구성합니다.
 - 경험 제목을 누르면 같은 화면에서 상세 내용이 펼쳐지는 아코디언입니다. 한 번에 하나의 항목이 열립니다.
@@ -41,21 +41,23 @@ npm run preview
 
 ## 수정 위치
 
-| 파일                                   | 내용                                                                  |
-| -------------------------------------- | --------------------------------------------------------------------- |
-| `src/data.ts`                          | 프로필, 경험 5개의 한·영 소개·상세·링크, 기술·도구 6개 분류           |
-| `src/App.tsx`                          | 페이지 구성, 아코디언, 역량·경험·연락처                               |
-| `src/i18n.tsx`                         | 한·영 소개·UI·수상·자격 문구, 언어 선택과 저장, 메타데이터            |
-| `src/styles.css`                       | 색상, 반응형 레이아웃, 접근성·인쇄 스타일                             |
-| `src/components/SkillIcon.tsx`         | 기술·도구·자격 라벨의 로고와 아이콘                                   |
-| `src/components/ExperienceGallery.tsx` | 경험 이미지 갤러리, 썸네일·이전·다음·확대 화면                        |
-| `src/projectImages.ts`                 | 경험별 이미지 순서, 한·영 캡션·대체텍스트, CSS 표시 방식              |
-| `src/components/ExperienceCover.tsx`   | DRAWN의 SVG 개념 커버                                                 |
-| `public/images/sumin-cho.jpeg`         | 사용자 제공 사진의 원본 복사본. 화면 크기·배치는 CSS로 조정           |
-| `public/images/projects/`              | 수상 사진 2장을 포함한 사용자 제공 프로젝트 이미지 10장의 원본 복사본 |
-| `public/og-image.svg`                  | 소셜 공유 이미지 편집 원본                                            |
-| `docs/content-sources.md`              | 내용의 출처와 표현 범위                                               |
-| `docs/qa.md`                           | 검증 내용과 범위                                                      |
+| 파일                                   | 내용                                                                         |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| `src/data.ts`                          | 프로필, 경험 5개의 한·영 소개·상세·링크, `getSkills()`의 기술·도구 13개 목록 |
+| `src/App.tsx`                          | 페이지 구성, 아코디언, 경험·수상 경력·연락처                                 |
+| `src/i18n.tsx`                         | 한·영 소개·UI·수상·자격 문구, 언어 선택과 저장, 메타데이터                   |
+| `src/styles.css`                       | 색상, 반응형 레이아웃, 접근성·인쇄 스타일                                    |
+| `src/components/SkillsSection.tsx`     | 기술·도구 단일 목록과 자격·면허 행                                           |
+| `src/components/SkillsSection.css`     | 기술·도구 목록의 간격·줄바꿈과 자격·면허 행 스타일                           |
+| `src/components/SkillIcon.tsx`         | 기술·도구·자격 라벨의 로고와 아이콘                                          |
+| `src/components/ExperienceGallery.tsx` | 경험 이미지 갤러리, 썸네일·이전·다음·확대 화면                               |
+| `src/projectImages.ts`                 | 경험별 이미지 순서, 한·영 캡션·대체텍스트, CSS 표시 방식                     |
+| `src/components/ExperienceCover.tsx`   | DRAWN의 SVG 개념 커버                                                        |
+| `public/images/sumin-cho.jpeg`         | 사용자 제공 사진의 원본 복사본. 화면 크기·배치는 CSS로 조정                  |
+| `public/images/projects/`              | 수상 사진 2장을 포함한 사용자 제공 프로젝트 이미지 10장의 원본 복사본        |
+| `public/og-image.svg`                  | 소셜 공유 이미지 편집 원본                                                   |
+| `docs/content-sources.md`              | 내용의 출처와 표현 범위                                                      |
+| `docs/qa.md`                           | 검증 내용과 범위                                                             |
 
 ## 배포
 

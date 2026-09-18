@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
 import { LuMail } from 'react-icons/lu';
-import { getExperiences, getSkillGroups, profile } from './data';
+import { getExperiences, profile } from './data';
 import type { Experience } from './data';
 import { LanguageSwitch, useLanguage } from './i18n';
 import { ExperienceCover } from './components/ExperienceCover';
 import { ExperienceGallery } from './components/ExperienceGallery';
-import { SkillIcon } from './components/SkillIcon';
+import { SkillsSection } from './components/SkillsSection';
 import { getProjectImages } from './projectImages';
 
 function Arrow({ down = false }: { down?: boolean }) {
@@ -184,7 +184,6 @@ function ExperienceItem({
 function App() {
   const { language, t } = useLanguage();
   const experiences = getExperiences(language);
-  const skillGroups = getSkillGroups(language);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState('about');
   const [copyStatus, setCopyStatus] = useState<'' | 'success' | 'error'>('');
@@ -207,7 +206,8 @@ function App() {
       let current = 'about';
       for (const section of sections) {
         if (section.getBoundingClientRect().top > readingLine) break;
-        current = section.id === 'home' ? 'about' : section.id;
+        current =
+          section.id === 'home' ? 'about' : section.id === 'awards' ? 'projects' : section.id;
       }
       setActiveSection(current);
     };
@@ -308,6 +308,36 @@ function App() {
               <p>{t.aboutParagraph3}</p>
             </div>
           </div>
+        </section>
+        <SkillsSection />
+        <section className="experiences-section content-width" id="projects">
+          <div className="section-intro">
+            <span className="eyebrow">SELECTED EXPERIENCES</span>
+            <h2>{t.experienceTitle}</h2>
+            <p>{t.experienceDescription}</p>
+          </div>
+          <div className="list-heading">
+            <span>{t.experienceCount}</span>
+            <span>2020 — 2026</span>
+          </div>
+          <div className="experience-list">
+            {experiences.map((experience, index) => (
+              <ExperienceItem
+                key={experience.id}
+                experience={experience}
+                index={index}
+                open={expanded === experience.id}
+                onToggle={() => setExpanded(expanded === experience.id ? null : experience.id)}
+              />
+            ))}
+          </div>
+        </section>
+        <section
+          className="awards-section content-width"
+          id="awards"
+          aria-labelledby="awards-title"
+        >
+          <h2 id="awards-title">{t.recognition}</h2>
           <div className="milestones" aria-label={t.recognition}>
             <a
               className="milestone"
@@ -336,65 +366,6 @@ function App() {
               <h3>{t.award3}</h3>
               <p>{t.award3Detail}</p>
             </div>
-          </div>
-        </section>
-        <section className="skills-section content-width" id="skills">
-          <div className="section-intro">
-            <span className="eyebrow">SKILLS & TOOLS</span>
-            <h2>{t.skillsTitle}</h2>
-          </div>
-          <div className="skill-groups">
-            {skillGroups.map((group, index) => (
-              <article className="skill-group" key={group.id}>
-                <span className="skill-number" aria-hidden="true">
-                  0{index + 1}
-                </span>
-                <h3>{group.title}</h3>
-                <ul>
-                  {group.items.map((item) => (
-                    <li key={item}>
-                      <SkillIcon name={item} />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-          <div className="credentials">
-            <h3>{t.credentialsTitle}</h3>
-            <ul>
-              <li>
-                <SkillIcon name="credential" />
-                {t.cloudCredential}
-              </li>
-              <li>
-                <SkillIcon name="license" />
-                {t.drivingLicense}
-              </li>
-            </ul>
-          </div>
-        </section>
-        <section className="experiences-section content-width" id="projects">
-          <div className="section-intro">
-            <span className="eyebrow">SELECTED EXPERIENCES</span>
-            <h2>{t.experienceTitle}</h2>
-            <p>{t.experienceDescription}</p>
-          </div>
-          <div className="list-heading">
-            <span>{t.experienceCount}</span>
-            <span>2020 — 2026</span>
-          </div>
-          <div className="experience-list">
-            {experiences.map((experience, index) => (
-              <ExperienceItem
-                key={experience.id}
-                experience={experience}
-                index={index}
-                open={expanded === experience.id}
-                onToggle={() => setExpanded(expanded === experience.id ? null : experience.id)}
-              />
-            ))}
           </div>
         </section>
         <section className="contact-section content-width" id="contact">

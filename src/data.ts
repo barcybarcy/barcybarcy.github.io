@@ -258,58 +258,28 @@ export function getExperiences(language: 'ko' | 'en') {
   return language === 'ko' ? korean : english;
 }
 
-export type SkillGroup = {
-  id: string;
-  title: string;
-  items: string[];
-};
-
-const koreanSkillGroups: SkillGroup[] = [
-  {
-    id: 'foundations',
-    title: '기초·비즈니스',
-    items: ['CS 지식', '이커머스 사업 경험'],
-  },
-  {
-    id: 'programming',
-    title: '프로그래밍',
-    items: ['C', 'Java', 'Python'],
-  },
-  {
-    id: 'ai-backend',
-    title: 'AI·백엔드',
-    items: ['FastAPI', 'YOLO'],
-  },
-  {
-    id: 'cloud',
-    title: '클라우드',
-    items: ['AWS', 'Google Cloud'],
-  },
-  {
-    id: 'research-design',
-    title: '연구·설계',
-    items: ['CFD · Ansys Fluent', '3D Slicer'],
-  },
-  {
-    id: 'creative',
-    title: '크리에이티브',
-    items: ['Ableton Live', 'Adobe Premiere Pro'],
-  },
+const koreanSkills: string[] = [
+  'CS 지식',
+  '이커머스 사업 경험',
+  'C',
+  'Java',
+  'Python',
+  'FastAPI',
+  'YOLO',
+  'AWS',
+  'Google Cloud',
+  'CFD · Ansys Fluent',
+  '3D Slicer',
+  'Ableton Live',
+  'Adobe Premiere Pro',
 ];
 
-const englishSkillGroups: SkillGroup[] = [
-  {
-    ...koreanSkillGroups[0],
-    title: 'Foundations & business',
-    items: ['Computer science fundamentals', 'E-commerce business experience'],
-  },
-  { ...koreanSkillGroups[1], title: 'Programming' },
-  { ...koreanSkillGroups[2], title: 'AI & backend' },
-  { ...koreanSkillGroups[3], title: 'Cloud' },
-  { ...koreanSkillGroups[4], title: 'Research & design' },
-  { ...koreanSkillGroups[5], title: 'Creative' },
+const englishSkills: string[] = [
+  'Computer science fundamentals',
+  'E-commerce business experience',
+  ...koreanSkills.slice(2),
 ];
 
-export function getSkillGroups(language: 'ko' | 'en'): SkillGroup[] {
-  return language === 'ko' ? koreanSkillGroups : englishSkillGroups;
+export function getSkills(language: 'ko' | 'en'): string[] {
+  return language === 'ko' ? koreanSkills : englishSkills;
 }
