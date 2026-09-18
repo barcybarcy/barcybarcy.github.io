@@ -46,22 +46,18 @@ const korean: Experience[] = [
     id: 'baro',
     name: 'BARO',
     category: 'AI · 산업 안전',
-    period: '2026.01 — 현재',
+    period: '2026',
     description: '기존 CCTV로 제조 현장의 위험을 감지하는 안전 모니터링 시스템.',
     role: '팀 리더',
     tags: ['Python', 'YOLO', 'Computer Vision'],
     details: [
       {
-        title: '풀고 있는 문제',
-        text: '소규모 제조업체도 기존 CCTV를 활용해 안전 위험을 파악할 수 있도록 저비용 모니터링 시스템을 개발하고 있습니다.',
+        title: '무엇을 만들었나요?',
+        text: '소규모 제조업체도 기존 CCTV를 활용해 안전 위험을 파악할 수 있도록 저비용 모니터링 시스템을 개발했습니다.',
       },
       {
         title: '내 역할',
-        text: '팀을 이끌며 MVP 범위를 정하고, 객체 탐지에서 위험도 산정과 알림까지 이어지는 흐름을 설계합니다.',
-      },
-      {
-        title: '현재 집중하는 것',
-        text: '탐지 오류와 지연 시간, 현장 도입 비용을 고려한 평가 기준을 정리하고 있습니다. 현재 개발 단계입니다.',
+        text: '팀을 이끌며 MVP 범위를 정하고, 객체 탐지에서 위험도 산정과 알림까지 이어지는 흐름을 설계했습니다.',
       },
       {
         title: '수상',
@@ -167,21 +163,17 @@ const english: Experience[] = [
   {
     ...korean[1],
     category: 'AI · Industrial safety',
-    period: '2026.01 — Present',
+    period: '2026',
     description: 'A safety monitoring system that detects workplace risks through existing CCTV.',
     role: 'Team lead',
     details: [
       {
-        title: 'The problem',
-        text: 'We are developing an affordable monitoring system that helps small manufacturers identify safety risks using their existing cameras.',
+        title: 'The product',
+        text: 'We developed an affordable monitoring system that helps small manufacturers identify safety risks using their existing cameras.',
       },
       {
         title: 'My role',
-        text: 'I lead the team, define the MVP scope, and design the workflow from object detection to risk scoring and alerts.',
-      },
-      {
-        title: 'Current focus',
-        text: 'We are defining evaluation criteria around detection errors, latency, and deployment costs. The system is in development.',
+        text: 'I led the team, defined the MVP scope, and designed the workflow from object detection to risk scoring and alerts.',
       },
       {
         title: 'Recognition',
