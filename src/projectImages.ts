@@ -49,6 +49,12 @@ const photos: Partial<Record<Experience['id'], ProjectPhoto[]>> = {
       en: 'Risk detection and maintenance mode interface',
       fit: 'contain',
     },
+    {
+      file: 'baro-capstone-award.jpg',
+      ko: 'BARO · 2026 캡스톤디자인 경진대회 우수상 수상',
+      en: 'BARO · Excellence Award, 2026 Capstone Design Competition',
+      fit: 'contain',
+    },
   ],
   paragon: [
     {
@@ -63,6 +69,12 @@ const photos: Partial<Record<Experience['id'], ProjectPhoto[]>> = {
       file: 'ens-airflow.png',
       ko: 'Ansys Fluent 비강 유동 해석',
       en: 'Nasal airflow simulation in Ansys Fluent',
+      fit: 'contain',
+    },
+    {
+      file: 'ens-rise-award.jpg',
+      ko: 'ENS CFD 연구 · RISE 연합 창업경진대회 우수상 수상',
+      en: 'ENS CFD Research · Excellence Award, RISE Joint Startup Competition',
       fit: 'contain',
     },
   ],

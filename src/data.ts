@@ -63,6 +63,10 @@ const korean: Experience[] = [
         title: '현재 집중하는 것',
         text: '탐지 오류와 지연 시간, 현장 도입 비용을 고려한 평가 기준을 정리하고 있습니다. 현재 개발 단계입니다.',
       },
+      {
+        title: '수상',
+        text: '2026 캡스톤디자인 경진대회 우수상.',
+      },
     ],
   },
   {
@@ -109,6 +113,10 @@ const korean: Experience[] = [
       {
         title: '연구 환경',
         text: '경기대학교 기계시스템공학과 김형민 교수님의 CFD 연구실에서 학부연구생으로 참여하고 있습니다.',
+      },
+      {
+        title: '수상',
+        text: 'RISE 연합 창업경진대회 우수상 · CFD 기반 의료 창업 아이디어.',
       },
     ],
   },
@@ -175,6 +183,10 @@ const english: Experience[] = [
         title: 'Current focus',
         text: 'We are defining evaluation criteria around detection errors, latency, and deployment costs. The system is in development.',
       },
+      {
+        title: 'Recognition',
+        text: 'Excellence Award, 2026 Capstone Design Competition.',
+      },
     ],
   },
   {
@@ -217,6 +229,10 @@ const english: Experience[] = [
       {
         title: 'The lab',
         text: 'I work as an undergraduate research assistant in Prof. Hyung Min Kim’s CFD lab, Department of Mechanical Systems Engineering at Kyonggi University.',
+      },
+      {
+        title: 'Recognition',
+        text: 'Excellence Award, RISE Joint Startup Competition · CFD-based medical startup concept.',
       },
     ],
   },

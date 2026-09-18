@@ -344,7 +344,7 @@ h4 {
 }
 .milestones {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   padding: 25px 0;
@@ -716,15 +716,10 @@ h4 {
   text-align: center;
 }
 .contact-section h2 {
-  font-size: 39px;
+  font-size: 44px;
   font-weight: 750;
   letter-spacing: -1.6px;
   line-height: 1.5;
-}
-.contact-section > p {
-  font-size: 13px;
-  color: #6b6b6b;
-  margin-top: 12px;
 }
 .contact-actions {
   display: flex;
@@ -736,11 +731,11 @@ h4 {
 .email-link {
   display: flex;
   align-items: center;
-  gap: 21px;
+  gap: 14px;
   border-radius: 30px;
   background: var(--green);
-  padding: 13px 24px;
-  font-size: 15px;
+  padding: 16px 24px;
+  font-size: 17px;
   font-weight: 650;
   transition: transform 0.2s;
 }
@@ -751,6 +746,11 @@ h4 {
 .email-link .icon {
   width: 18px;
   height: 18px;
+}
+.contact-brand-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 .copy-button {
   display: grid;
@@ -768,28 +768,43 @@ h4 {
   background: #ebebeb;
 }
 .copy-status {
-  height: 27px;
-  padding-top: 6px;
   color: var(--green-dark);
-  font-size: 10px;
+  font-size: 11px;
+}
+.copy-status:not(:empty) {
+  padding-top: 8px;
 }
 .social-links {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  margin-top: 7px;
+  gap: 14px;
+  margin-top: 18px;
 }
 .social-links > a {
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border: 1px solid #121212;
+  border-radius: 30px;
+  background: #121212;
+  color: #fff;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.social-links > a:hover {
+  background: var(--green);
+  border-color: var(--green);
+  color: #121212;
 }
 .social-links .icon {
-  width: 13px;
-  height: 13px;
+  width: 16px;
+  height: 16px;
 }
 .site-footer {
   border-top: 1px solid var(--line);
@@ -1280,10 +1295,6 @@ h4 {
     font-size: 31px;
     letter-spacing: -1.2px;
   }
-  .contact-section > p {
-    font-size: 11px;
-    margin-top: 10px;
-  }
   .contact-actions {
     gap: 8px;
     margin-top: 24px;
@@ -1291,7 +1302,11 @@ h4 {
   .email-link {
     font-size: 13px;
     padding: 12px 18px;
-    gap: 15px;
+    gap: 10px;
+  }
+  .contact-brand-icon {
+    width: 19px;
+    height: 19px;
   }
   .email-link .icon {
     width: 16px;
@@ -1305,10 +1320,12 @@ h4 {
     font-size: 9px;
   }
   .social-links {
-    gap: 22px;
+    gap: 10px;
   }
   .social-links > a {
-    font-size: 10px;
+    font-size: 14px;
+    padding: 13px 18px;
+    gap: 9px;
   }
   .site-footer {
     padding-block: 20px;
@@ -1352,8 +1369,11 @@ h4 {
   }
   .email-link {
     font-size: 12px;
-    padding-inline: 16px;
-    gap: 12px;
+    padding-inline: 12px;
+    gap: 8px;
+  }
+  .social-links > a {
+    padding-inline: 15px;
   }
   .contact-section h2 {
     font-size: 28px;

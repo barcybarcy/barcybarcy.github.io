@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
+import { LuMail } from 'react-icons/lu';
 import { getExperiences, getSkillGroups, profile } from './data';
 import type { Experience } from './data';
 import { LanguageSwitch, useLanguage } from './i18n';
@@ -325,6 +327,11 @@ function App() {
               <p>{t.award2Detail}</p>
             </div>
             <div className="milestone">
+              <span className="milestone-date">2026.06</span>
+              <h3>{t.capstoneAward}</h3>
+              <p>{t.capstoneAwardDetail}</p>
+            </div>
+            <div className="milestone">
               <span className="milestone-date">2026.03</span>
               <h3>{t.award3}</h3>
               <p>{t.award3Detail}</p>
@@ -391,11 +398,10 @@ function App() {
           </div>
         </section>
         <section className="contact-section content-width" id="contact">
-          <span className="eyebrow">LET’S CONNECT</span>
           <h2>{t.contactTitle}</h2>
-          <p>{t.contactDescription}</p>
           <div className="contact-actions">
             <a className="email-link" href={`mailto:${profile.email}`}>
+              <LuMail className="contact-brand-icon" aria-hidden="true" focusable="false" />
               {profile.email}
               <Arrow />
             </a>
@@ -417,8 +423,14 @@ function App() {
             {copyStatus === 'success' ? t.copySuccess : copyStatus === 'error' ? t.copyError : ''}
           </div>
           <div className="social-links">
-            <ExternalLink href={profile.github}>GitHub</ExternalLink>
-            <ExternalLink href={profile.linkedin}>LinkedIn</ExternalLink>
+            <ExternalLink href={profile.github}>
+              <FaGithub className="contact-brand-icon" aria-hidden="true" focusable="false" />
+              GitHub
+            </ExternalLink>
+            <ExternalLink href={profile.linkedin}>
+              <FaLinkedinIn className="contact-brand-icon" aria-hidden="true" focusable="false" />
+              LinkedIn
+            </ExternalLink>
           </div>
         </section>
       </main>
