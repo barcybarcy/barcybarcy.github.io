@@ -4,6 +4,9 @@ import { getExperiences, getSkillGroups, profile } from './data';
 import type { Experience } from './data';
 import { LanguageSwitch, useLanguage } from './i18n';
 import { ExperienceCover } from './components/ExperienceCover';
+import { ExperienceGallery } from './components/ExperienceGallery';
+import { SkillIcon } from './components/SkillIcon';
+import { getProjectImages } from './projectImages';
 
 function Arrow({ down = false }: { down?: boolean }) {
   return (
@@ -83,7 +86,8 @@ function ExperienceItem({
   open: boolean;
   onToggle: () => void;
 }) {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+  const images = getProjectImages(experience.id, language);
   const hasDetails = experience.details.length > 0;
   return (
     <article className={`experience-item ${open ? 'is-open' : ''}`} id={`story-${experience.id}`}>
@@ -116,13 +120,17 @@ function ExperienceItem({
           </h3>
           <p className="experience-description">{experience.description || t.pending}</p>
           <div className="experience-overview">
-            <figure
-              className={`experience-cover cover-${experience.id}`}
-              role="img"
-              aria-label={`${experience.name} · ${t.coverNote}`}
-            >
-              <ExperienceCover kind={experience.id} />
-            </figure>
+            {images.length > 0 ? (
+              <ExperienceGallery name={experience.name} images={images} />
+            ) : (
+              <figure
+                className={`experience-cover cover-${experience.id}`}
+                role="img"
+                aria-label={`${experience.name} · ${t.coverNote}`}
+              >
+                <ExperienceCover kind={experience.id} />
+              </figure>
+            )}
             <div className="experience-facts">
               {experience.role && (
                 <div>
@@ -197,8 +205,7 @@ function App() {
       let current = 'about';
       for (const section of sections) {
         if (section.getBoundingClientRect().top > readingLine) break;
-        current =
-          section.id === 'home' ? 'about' : section.id === 'education' ? 'projects' : section.id;
+        current = section.id === 'home' ? 'about' : section.id;
       }
       setActiveSection(current);
     };
@@ -338,7 +345,10 @@ function App() {
                 <h3>{group.title}</h3>
                 <ul>
                   {group.items.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item}>
+                      <SkillIcon name={item} />
+                      <span>{item}</span>
+                    </li>
                   ))}
                 </ul>
               </article>
@@ -348,15 +358,11 @@ function App() {
             <h3>{t.credentialsTitle}</h3>
             <ul>
               <li>
-                <span className="credential-check" aria-hidden="true">
-                  ✓
-                </span>
+                <SkillIcon name="credential" />
                 {t.cloudCredential}
               </li>
               <li>
-                <span className="credential-check" aria-hidden="true">
-                  ✓
-                </span>
+                <SkillIcon name="license" />
                 {t.drivingLicense}
               </li>
             </ul>
@@ -382,34 +388,6 @@ function App() {
                 onToggle={() => setExpanded(expanded === experience.id ? null : experience.id)}
               />
             ))}
-          </div>
-        </section>
-        <section className="education-section content-width" id="education">
-          <div className="section-intro compact">
-            <span className="eyebrow">THE FOUNDATION</span>
-            <h2>{t.educationTitle}</h2>
-          </div>
-          <div className="education-list">
-            <article>
-              <span className="education-symbol" aria-hidden="true">
-                ↗
-              </span>
-              <div>
-                <h3>{t.university}</h3>
-                <p>{t.degree}</p>
-              </div>
-              <span>GPA 4.05 / 4.5</span>
-            </article>
-            <article>
-              <span className="education-symbol" aria-hidden="true">
-                ↗
-              </span>
-              <div>
-                <h3>Qualcomm Institute · UC San Diego</h3>
-                <p>{t.program}</p>
-              </div>
-              <span>2026.06 — 07</span>
-            </article>
           </div>
         </section>
         <section className="contact-section content-width" id="contact">

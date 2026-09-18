@@ -468,7 +468,7 @@ h4 {
   content: '';
   position: absolute;
   inset: -12px;
-  z-index: 2;
+  z-index: 1;
   border-radius: 8px;
 }
 .experience-trigger:focus-visible {
@@ -510,7 +510,7 @@ h4 {
 }
 .experience-overview {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 360px minmax(0, 1fr);
   gap: 28px;
   align-items: center;
   margin-top: 21px;
@@ -661,14 +661,26 @@ h4 {
   margin: 18px 0 0;
 }
 .skill-group li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 12px;
   color: #414141;
   background: #f5f5f5;
   border-radius: 5px;
-  padding: 5px 9px;
+  padding: 7px 10px;
   line-height: 1.6;
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+.skill-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+.skill-group li > span {
+  min-width: 0;
 }
 .credentials {
   margin-top: 24px;
@@ -692,49 +704,11 @@ h4 {
 }
 .credentials li {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   font-size: 12px;
   color: #414141;
   overflow-wrap: anywhere;
-}
-.credential-check {
-  color: var(--green-dark);
-  font-weight: 700;
-}
-.education-section {
-  padding-block: 20px 90px;
-}
-.education-list {
-  border-top: 1px solid var(--line);
-}
-.education-list > article {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  border-bottom: 1px solid var(--line);
-  padding: 22px 10px;
-}
-.education-symbol {
-  font-size: 22px;
-  color: #159646;
-  font-weight: 400;
-}
-.education-list h3 {
-  font-size: 13px;
-  line-height: 1.7;
-  font-weight: 650;
-}
-.education-list p {
-  font-size: 11px;
-  color: #6a6a6a;
-  margin-top: 3px;
-}
-.education-list > article > span:last-child {
-  margin-left: auto;
-  font-size: 10px;
-  color: #717171;
-  white-space: nowrap;
 }
 .contact-section {
   padding-block: 57px 73px;
@@ -867,7 +841,7 @@ h4 {
     padding-inline: 32px;
   }
   .experience-overview {
-    grid-template-columns: 245px 1fr;
+    grid-template-columns: 300px minmax(0, 1fr);
     gap: 23px;
   }
   .experience-item {
@@ -1299,35 +1273,6 @@ h4 {
   .skills-section {
     padding-block: 23px 46px;
   }
-  .education-section {
-    padding-block: 20px 59px;
-  }
-  .education-list > article {
-    padding: 19px 0;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .education-symbol {
-    font-size: 20px;
-  }
-  .education-list > article > div {
-    flex: 1;
-    min-width: 0;
-  }
-  .education-list h3 {
-    font-size: 12px;
-    line-height: 1.7;
-  }
-  .education-list p {
-    font-size: 10px;
-    line-height: 1.8;
-  }
-  .education-list > article > span:last-child {
-    width: 100%;
-    padding-left: 30px;
-    font-size: 9px;
-    margin-top: -8px;
-  }
   .contact-section {
     padding-block: 43px 48px;
   }
@@ -1386,9 +1331,6 @@ h4 {
     flex-wrap: wrap;
     gap: 4px 12px;
   }
-  :lang(en) .education-list p {
-    font-size: 10px;
-  }
 }
 @media (max-width: 360px) {
   .header-github {
@@ -1446,7 +1388,6 @@ h4 {
   }
   .about-section,
   .skills-section,
-  .education-section,
   .contact-section {
     padding-block: 25px;
   }
