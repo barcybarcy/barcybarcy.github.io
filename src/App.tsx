@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { getExperiences, profile } from './data';
+import { getExperiences, getSkillGroups, profile } from './data';
 import type { Experience } from './data';
 import { LanguageSwitch, useLanguage } from './i18n';
 import { ExperienceCover } from './components/ExperienceCover';
@@ -174,13 +174,14 @@ function ExperienceItem({
 function App() {
   const { language, t } = useLanguage();
   const experiences = getExperiences(language);
+  const skillGroups = getSkillGroups(language);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState('about');
   const [copyStatus, setCopyStatus] = useState<'' | 'success' | 'error'>('');
   const navigation = [
     { id: 'about', label: t.intro },
-    { id: 'projects', label: t.experience },
     { id: 'skills', label: t.skills },
+    { id: 'projects', label: t.experience },
     { id: 'contact', label: t.contact },
   ];
   useEffect(() => {
@@ -197,7 +198,7 @@ function App() {
       for (const section of sections) {
         if (section.getBoundingClientRect().top > readingLine) break;
         current =
-          section.id === 'home' ? 'about' : section.id === 'education' ? 'skills' : section.id;
+          section.id === 'home' ? 'about' : section.id === 'education' ? 'projects' : section.id;
       }
       setActiveSection(current);
     };
@@ -229,19 +230,6 @@ function App() {
       setCopyStatus('error');
     }
   }
-  const strengths = [
-    { title: t.skill1, description: t.skill1Description, tags: ['E-commerce', 'Product thinking'] },
-    {
-      title: t.skill2,
-      description: t.skill2Description,
-      tags: ['React', 'FastAPI', 'YOLO', 'GCP'],
-    },
-    {
-      title: t.skill3,
-      description: t.skill3Description,
-      tags: ['CFD', 'Ansys Fluent', 'Data analysis'],
-    },
-  ];
   return (
     <>
       <a href="#main" className="skip-link">
@@ -272,7 +260,7 @@ function App() {
             {t.heroSuffix}
           </h1>
           <p>{t.heroDescription}</p>
-          <a href="#projects" className="hero-explore" aria-label={t.experience}>
+          <a href="#about" className="hero-explore" aria-label={t.intro}>
             <Arrow down />
           </a>
         </section>
@@ -293,10 +281,23 @@ function App() {
           ))}
         </nav>
         <section className="about-section content-width" id="about">
-          <div className="section-intro">
-            <span className="eyebrow">ABOUT ME</span>
-            <h2>{t.aboutTitle}</h2>
-            <p>{t.aboutDescription}</p>
+          <div className="about-profile">
+            <figure className="about-photo">
+              <img
+                src="/images/sumin-cho.jpeg"
+                alt={t.aboutPhotoAlt}
+                width="1896"
+                height="1659"
+                decoding="async"
+              />
+            </figure>
+            <div className="about-story">
+              <span className="eyebrow">ABOUT ME</span>
+              <h2>{t.aboutTitle}</h2>
+              <p>{t.aboutParagraph1}</p>
+              <p>{t.aboutParagraph2}</p>
+              <p>{t.aboutParagraph3}</p>
+            </div>
           </div>
           <div className="milestones" aria-label={t.recognition}>
             <a
@@ -323,6 +324,44 @@ function App() {
             </div>
           </div>
         </section>
+        <section className="skills-section content-width" id="skills">
+          <div className="section-intro">
+            <span className="eyebrow">SKILLS & TOOLS</span>
+            <h2>{t.skillsTitle}</h2>
+          </div>
+          <div className="skill-groups">
+            {skillGroups.map((group, index) => (
+              <article className="skill-group" key={group.id}>
+                <span className="skill-number" aria-hidden="true">
+                  0{index + 1}
+                </span>
+                <h3>{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <div className="credentials">
+            <h3>{t.credentialsTitle}</h3>
+            <ul>
+              <li>
+                <span className="credential-check" aria-hidden="true">
+                  ✓
+                </span>
+                {t.cloudCredential}
+              </li>
+              <li>
+                <span className="credential-check" aria-hidden="true">
+                  ✓
+                </span>
+                {t.drivingLicense}
+              </li>
+            </ul>
+          </div>
+        </section>
         <section className="experiences-section content-width" id="projects">
           <div className="section-intro">
             <span className="eyebrow">SELECTED EXPERIENCES</span>
@@ -342,26 +381,6 @@ function App() {
                 open={expanded === experience.id}
                 onToggle={() => setExpanded(expanded === experience.id ? null : experience.id)}
               />
-            ))}
-          </div>
-        </section>
-        <section className="skills-section content-width" id="skills">
-          <div className="section-intro">
-            <span className="eyebrow">WHAT I BRING</span>
-            <h2>{t.skillsTitle}</h2>
-          </div>
-          <div className="strengths">
-            {strengths.map((strength, i) => (
-              <article key={i}>
-                <span className="strength-number">0{i + 1}</span>
-                <h3>{strength.title}</h3>
-                <p>{strength.description}</p>
-                <div className="strength-tags">
-                  {strength.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </article>
             ))}
           </div>
         </section>
@@ -390,16 +409,6 @@ function App() {
                 <p>{t.program}</p>
               </div>
               <span>2026.06 — 07</span>
-            </article>
-            <article>
-              <span className="education-symbol" aria-hidden="true">
-                ↗
-              </span>
-              <div>
-                <h3>Google Cloud Certified</h3>
-                <p>{t.certification}</p>
-              </div>
-              <span>2026.08</span>
             </article>
           </div>
         </section>

@@ -305,8 +305,42 @@ h4 {
 .about-section {
   padding-block: 100px 82px;
 }
-.about-section .section-intro {
-  margin-bottom: 32px;
+.about-profile {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  align-items: center;
+  gap: 64px;
+  margin-bottom: 52px;
+}
+.about-photo {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f3f3f3;
+}
+.about-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 12% center;
+}
+.about-story h2 {
+  font-size: 32px;
+  font-weight: 750;
+  line-height: 1.4;
+  letter-spacing: -1.2px;
+  margin-bottom: 24px;
+}
+.about-story p {
+  font-size: 14px;
+  line-height: 1.95;
+  color: #515151;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.about-story p + p {
+  margin-top: 15px;
 }
 .milestones {
   display: grid;
@@ -595,47 +629,78 @@ h4 {
 .skills-section {
   padding-block: 47px 80px;
 }
-.strengths {
+.skill-groups {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 36px;
+  gap: 18px;
 }
-.strengths article {
-  padding-top: 23px;
-  border-top: 2px solid #121212;
+.skill-group {
+  position: relative;
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
 }
-.strength-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #e9faef;
-  color: #127f37;
+.skill-number {
+  display: block;
+  color: var(--green-dark);
   font-size: 10px;
   font-weight: 650;
+  margin-bottom: 15px;
 }
-.strengths h3 {
-  font-size: 18px;
-  letter-spacing: -0.5px;
+.skill-group h3 {
+  font-size: 16px;
+  letter-spacing: -0.3px;
   line-height: 1.5;
-  margin-top: 15px;
 }
-.strengths p {
-  font-size: 12px;
-  color: #686868;
-  line-height: 1.9;
-  margin-top: 9px;
-  word-break: keep-all;
-}
-.strength-tags {
+.skill-group ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 12px;
-  margin-top: 16px;
-  font-size: 9px;
-  color: #737373;
+  gap: 7px;
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+}
+.skill-group li {
+  font-size: 12px;
+  color: #414141;
+  background: #f5f5f5;
+  border-radius: 5px;
+  padding: 5px 9px;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.credentials {
+  margin-top: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  gap: 30px;
+}
+.credentials h3 {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.credentials ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 28px;
+}
+.credentials li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12px;
+  color: #414141;
+  overflow-wrap: anywhere;
+}
+.credential-check {
+  color: var(--green-dark);
+  font-weight: 700;
 }
 .education-section {
   padding-block: 20px 90px;
@@ -791,6 +856,13 @@ h4 {
   }
 }
 @media (max-width: 1000px) {
+  .about-profile {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 40px;
+  }
+  .skill-group {
+    padding: 22px;
+  }
   .site-header {
     padding-inline: 32px;
   }
@@ -801,9 +873,6 @@ h4 {
   .experience-item {
     grid-template-columns: 40px minmax(0, 1fr);
     gap: 15px;
-  }
-  .strengths {
-    gap: 26px;
   }
   .milestone {
     padding-inline: 18px;
@@ -816,6 +885,25 @@ h4 {
   }
 }
 @media (max-width: 760px) {
+  .about-profile {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 28px;
+  }
+  .about-story h2 {
+    font-size: 27px;
+    margin-bottom: 19px;
+  }
+  .about-story p {
+    font-size: 13px;
+  }
+  .skill-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .credentials {
+    align-items: flex-start;
+    gap: 20px;
+  }
   .content-width {
     width: calc(100% - 48px);
   }
@@ -922,18 +1010,6 @@ h4 {
   .skills-section {
     padding-block: 30px 66px;
   }
-  .strengths {
-    gap: 21px;
-  }
-  .strengths h3 {
-    font-size: 16px;
-  }
-  .strengths p {
-    font-size: 11px;
-  }
-  .strength-tags {
-    font-size: 8px;
-  }
   .contact-section h2 {
     font-size: 35px;
   }
@@ -947,6 +1023,50 @@ h4 {
   }
 }
 @media (max-width: 600px) {
+  .about-profile {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 35px;
+  }
+  .about-photo {
+    width: 100%;
+    max-width: 310px;
+    margin-inline: auto;
+  }
+  .about-story h2 {
+    font-size: 27px;
+  }
+  .about-story p {
+    font-size: 13px;
+    line-height: 1.95;
+  }
+  .skill-groups {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .skill-group {
+    padding: 20px;
+  }
+  .skill-number {
+    position: absolute;
+    top: 24px;
+    right: 22px;
+    margin: 0;
+  }
+  .skill-group h3 {
+    padding-right: 25px;
+  }
+  .skill-group ul {
+    margin-top: 12px;
+  }
+  .credentials {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  .credentials ul {
+    flex-direction: column;
+  }
   html {
     scroll-padding-top: 137px;
   }
@@ -1178,30 +1298,6 @@ h4 {
   }
   .skills-section {
     padding-block: 23px 46px;
-  }
-  .strengths {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .strengths article {
-    padding-top: 16px;
-  }
-  .strength-number {
-    width: 27px;
-    height: 27px;
-    font-size: 9px;
-  }
-  .strengths h3 {
-    font-size: 18px;
-    margin-top: 11px;
-  }
-  .strengths p {
-    font-size: 12px;
-    margin-top: 7px;
-  }
-  .strength-tags {
-    font-size: 9px;
-    margin-top: 12px;
   }
   .education-section {
     padding-block: 20px 59px;

@@ -24,21 +24,21 @@ const korean: Experience[] = [
     name: '온라인 쇼핑몰 사업',
     category: '창업 · 서비스 운영',
     period: '2020.06 — 2024.12',
-    description: '상품 소싱부터 판매, 배송, 고객 응대까지 직접 운영한 첫 사업.',
+    description: '매출 1억 8천만 원을 기록한 자동차용품·액세서리 온라인 쇼핑몰.',
     role: '창업 및 운영',
     tags: ['E-commerce', 'Operations', 'Customer Experience'],
     details: [
       {
         title: '무엇을 했나요?',
-        text: '자동차용품을 판매하는 온라인 스토어를 창업하고, 국내 4개 마켓플레이스에서 운영했습니다.',
+        text: '국내 4개 마켓플레이스에서 자동차용품과 액세서리를 판매했습니다.',
       },
       {
         title: '직접 맡은 일',
         text: '상품 소싱과 가격 결정, 재고·배송 관리, 고객 응대와 정산까지 사업의 전 과정을 맡았습니다.',
       },
       {
-        title: '남은 것',
-        text: '고객이 원하는 것과 실제로 운영 가능한 것을 함께 고민하는 관점. 지금도 서비스를 만들 때 가장 먼저 꺼내는 경험입니다.',
+        title: '개발을 시작한 계기',
+        text: '온라인 판매를 운영하며 플랫폼과 소프트웨어 개발에 관심을 갖게 됐고, 개발자가 되기로 결심했습니다.',
       },
     ],
   },
@@ -139,20 +139,20 @@ const english: Experience[] = [
     name: 'Online retail business',
     category: 'Entrepreneurship · Operations',
     description:
-      'My first business: from sourcing products to sales, delivery, and customer support.',
+      'An online automotive products and accessories store with KRW 180 million in revenue.',
     role: 'Founder & operator',
     details: [
       {
         title: 'The business',
-        text: 'I founded an automotive accessories store and operated it across four Korean marketplaces.',
+        text: 'I sold automotive products and accessories across four Korean marketplaces.',
       },
       {
         title: 'My role',
         text: 'I managed the full operation: sourcing, pricing, inventory, fulfillment, customer support, and settlements.',
       },
       {
-        title: 'What stayed with me',
-        text: 'A habit of considering customer needs and operational realities together. This experience still shapes how I build services.',
+        title: 'Why I became a developer',
+        text: 'Running the store sparked my interest in platforms and software development, leading me to pursue a career as a developer.',
       },
     ],
   },
@@ -240,4 +240,60 @@ const english: Experience[] = [
 
 export function getExperiences(language: 'ko' | 'en') {
   return language === 'ko' ? korean : english;
+}
+
+export type SkillGroup = {
+  id: string;
+  title: string;
+  items: string[];
+};
+
+const koreanSkillGroups: SkillGroup[] = [
+  {
+    id: 'foundations',
+    title: '기초·비즈니스',
+    items: ['CS 지식', '이커머스 사업 경험'],
+  },
+  {
+    id: 'programming',
+    title: '프로그래밍',
+    items: ['C', 'Java', 'Python'],
+  },
+  {
+    id: 'ai-backend',
+    title: 'AI·백엔드',
+    items: ['FastAPI', 'YOLO'],
+  },
+  {
+    id: 'cloud',
+    title: '클라우드',
+    items: ['AWS', 'Google Cloud'],
+  },
+  {
+    id: 'research-design',
+    title: '연구·설계',
+    items: ['CFD · Ansys Fluent', '3D Slicer'],
+  },
+  {
+    id: 'creative',
+    title: '크리에이티브',
+    items: ['Ableton Live', 'Adobe Premiere Pro'],
+  },
+];
+
+const englishSkillGroups: SkillGroup[] = [
+  {
+    ...koreanSkillGroups[0],
+    title: 'Foundations & business',
+    items: ['Computer science fundamentals', 'E-commerce business experience'],
+  },
+  { ...koreanSkillGroups[1], title: 'Programming' },
+  { ...koreanSkillGroups[2], title: 'AI & backend' },
+  { ...koreanSkillGroups[3], title: 'Cloud' },
+  { ...koreanSkillGroups[4], title: 'Research & design' },
+  { ...koreanSkillGroups[5], title: 'Creative' },
+];
+
+export function getSkillGroups(language: 'ko' | 'en'): SkillGroup[] {
+  return language === 'ko' ? koreanSkillGroups : englishSkillGroups;
 }
