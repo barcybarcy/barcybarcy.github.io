@@ -26,16 +26,16 @@ npm run preview
 - 흰색 배경에 Spotify Green 계열의 초록색과 검정색을 사용하고, `SUMIN CHO` 워드마크를 배치했습니다.
 - 한국어·영어 원페이지: 소개 → 기술과 도구 → 대표 경험 5개 → 수상 경력 → Contact.
 - 소개에는 사용자가 제공한 사진과 자동차용품·액세서리 쇼핑몰 운영에서 개발자로 이어진 이야기를 담았습니다.
-- 수상 경력은 대표 경험 다음, Contact 앞에 독립된 `수상 경력 / Awards` 섹션으로 배치합니다. PARAGON의 두 해커톤 수상, BARO의 2026 캡스톤디자인 경진대회 우수상, ENS CFD 기반 의료 창업 아이디어의 RISE 연합 창업경진대회 우수상 등 4개를 표시합니다.
+- 수상 경력은 대표 경험 다음, Contact 앞에 독립된 `수상 경력 / Awards` 섹션으로 배치합니다. PARAGON의 두 해커톤 수상, BARO의 2026 캡스톤디자인 경진대회 우수상, ENS CFD 기반 의료 창업 아이디어의 RISE 연합 창업경진대회 우수상, DRAWN의 경기 SW페스타 장려상·4위 등 5개를 표시합니다.
 - 기술과 도구는 13개 항목의 아이콘과 이름을 하나의 간결한 목록으로 보여주며 화면 너비에 맞춰 줄바꿈합니다. Google Cloud Professional Machine Learning Engineer 자격과 운전면허는 아래의 작은 행에 함께 표시합니다.
 - 기술·도구와 자격 라벨 옆에 로고 또는 아이콘을 표시합니다. `react-icons`의 정적 import와 로컬 SVG를 사용합니다.
 - 경험은 온라인 쇼핑몰 사업 → BARO → PARAGON → ENS CFD 연구 → DRAWN 순서로 구성합니다.
 - 경험 제목을 누르면 같은 화면에서 상세 내용이 펼쳐지는 아코디언입니다. 한 번에 하나의 항목이 열립니다.
-- 사업 2장, BARO 5장, PARAGON 1장, ENS CFD 연구 2장으로 총 10장의 사용자 제공 이미지를 갤러리로 보여줍니다. BARO와 ENS의 수상 사진은 각각 마지막에 배치합니다. 썸네일과 이전·다음 버튼으로 탐색하고, 확대 화면에서는 좌우 방향키로 이동하거나 Esc로 닫을 수 있습니다.
+- 사업 2장, BARO 5장, PARAGON 1장, ENS CFD 연구 2장, DRAWN 2장으로 총 12장의 사용자 제공 이미지를 갤러리로 보여줍니다. BARO와 ENS의 수상 사진은 각각 마지막에 배치하며, DRAWN은 개발 현장 → 수상 사진 순서입니다. 썸네일과 이전·다음 버튼으로 탐색하고, 확대 화면에서는 좌우 방향키로 이동하거나 Esc로 닫을 수 있습니다.
 - 상단 KOR / ENG 버튼으로 본문·경험 상세·접근성 문구를 전환합니다. 기본 언어는 한국어이며 선택은 브라우저에 저장됩니다. 저장소 접근이 제한되어도 전환은 동작합니다.
 - 반응형 레이아웃, 섹션 내비게이션, 이메일 복사와 실패 안내, 이메일·GitHub·LinkedIn 링크.
 - 연락처는 `Contact` 제목 아래 이메일·GitHub·LinkedIn 아이콘 버튼을 중심으로 구성합니다.
-- DRAWN은 직접 제작한 SVG 개념 커버를 사용합니다. 다른 네 경험은 사용자 제공 이미지의 원본을 복사해 사용하고, 화면 배치는 CSS로 조정합니다.
+- 다섯 경험은 사용자 제공 이미지의 원본을 복사해 사용하고, 화면 배치는 CSS로 조정합니다. DRAWN의 SVG 개념 커버도 소스에 유지합니다.
 - reduced-motion 지원, 키보드 포커스와 본문 바로가기를 제공합니다.
 - DM Sans와 Noto Sans KR 가변 폰트를 Fontsource 패키지에서 자체 호스팅합니다. 각 패키지의 OFL 라이선스를 따릅니다.
 
@@ -54,12 +54,24 @@ npm run preview
 | `src/projectImages.ts`                 | 경험별 이미지 순서, 한·영 캡션·대체텍스트, CSS 표시 방식                     |
 | `src/components/ExperienceCover.tsx`   | DRAWN의 SVG 개념 커버                                                        |
 | `public/images/sumin-cho.jpeg`         | 사용자 제공 사진의 원본 복사본. 화면 크기·배치는 CSS로 조정                  |
-| `public/images/projects/`              | 수상 사진 2장을 포함한 사용자 제공 프로젝트 이미지 10장의 원본 복사본        |
+| `public/images/projects/`              | 수상 사진 3장을 포함한 사용자 제공 프로젝트 이미지 12장의 원본 복사본        |
 | `public/og-image.svg`                  | 소셜 공유 이미지 편집 원본                                                   |
 | `docs/content-sources.md`              | 내용의 출처와 표현 범위                                                      |
 | `docs/qa.md`                           | 검증 내용과 범위                                                             |
 
 ## 배포
+
+GitHub Pages 주소는 [https://barcybarcy.github.io/](https://barcybarcy.github.io/)입니다. 전용 저장소 [barcybarcy/barcybarcy.github.io](https://github.com/barcybarcy/barcybarcy.github.io)의 `codex/portfolio` 브랜치가 배포 소스입니다. Settings → Pages의 Source는 **GitHub Actions**로 설정합니다.
+
+`.github/workflows/deploy-pages.yml`이 의존성 설치, 형식 검사, 빌드 후 `dist/`만 배포합니다. 이 워크플로는 전용 저장소에서 실행하며 `codex/portfolio`에 push하거나 Actions에서 수동 실행할 수 있습니다. 루트 주소를 사용하므로 Vite의 기본 `base: '/'`를 유지합니다.
+
+로컬의 `github-pages` remote에 전용 저장소를 연결한 뒤 다음 명령으로 업데이트합니다.
+
+```sh
+git push github-pages codex/portfolio
+```
+
+`outputs/`는 신청서 등 개인 작업 파일이 포함될 수 있어 Git에서 제외합니다.
 
 `npm run build`로 생성되는 `dist/`를 정적 호스팅에 올릴 수 있습니다. Vercel에는 이 저장소를 연결하고 Framework Preset을 **Vite**, Build Command를 `npm run build`, Output Directory를 `dist`로 설정합니다. 같은 설정을 `vercel.json`에도 포함했습니다.
 

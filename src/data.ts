@@ -133,6 +133,10 @@ const korean: Experience[] = [
         title: '비행 성능을 살펴봅니다',
         text: '입력한 설계 조건을 바탕으로 드론이 얼마나 비행할 수 있을지 추론하는 플랫폼입니다.',
       },
+      {
+        title: '수상',
+        text: '2026 경기 SW페스타의 AI-Powered SW상상기업 부문에서 4위를 차지해 장려상을 수상했습니다.',
+      },
     ],
   },
 ];
@@ -241,6 +245,10 @@ const english: Experience[] = [
       {
         title: 'Explore flight performance',
         text: 'The platform uses those design conditions to infer the drone’s flight performance.',
+      },
+      {
+        title: 'Recognition',
+        text: 'DRAWN placed 4th and received the Encouragement Award in the AI-Powered SW Imagination Enterprise category at the 2026 Kyonggi SW Festa.',
       },
     ],
   },

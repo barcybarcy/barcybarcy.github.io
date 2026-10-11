@@ -78,6 +78,20 @@ const photos: Partial<Record<Experience['id'], ProjectPhoto[]>> = {
       fit: 'contain',
     },
   ],
+  drawn: [
+    {
+      file: 'drawn-development.jpeg',
+      ko: 'DRAWN 팀의 드론 설계 플랫폼 개발 현장',
+      en: 'DRAWN team developing the drone design platform',
+      fit: 'contain',
+    },
+    {
+      file: 'drawn-sw-festa-award.jpeg',
+      ko: 'DRAWN · 2026 경기 SW페스타 AI-Powered SW상상기업 장려상 · 4위',
+      en: 'DRAWN · Encouragement Award · 4th place, 2026 Kyonggi SW Festa · AI-Powered SW Imagination Enterprise',
+      fit: 'contain',
+    },
+  ],
 };
 
 export function getProjectImages(id: Experience['id'], language: Language): ExperienceImage[] {

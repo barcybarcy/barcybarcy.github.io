@@ -339,6 +339,11 @@ function App() {
         >
           <h2 id="awards-title">{t.recognition}</h2>
           <div className="milestones" aria-label={t.recognition}>
+            <div className="milestone">
+              <span className="milestone-date">2026</span>
+              <h3>{t.drawnAward}</h3>
+              <p>{t.drawnAwardDetail}</p>
+            </div>
             <a
               className="milestone"
               href="https://www.etnews.com/20260827000345"
