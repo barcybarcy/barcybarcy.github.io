@@ -76,7 +76,3 @@ git push github-pages codex/portfolio
 `npm run build`로 생성되는 `dist/`를 정적 호스팅에 올릴 수 있습니다. Vercel에는 이 저장소를 연결하고 Framework Preset을 **Vite**, Build Command를 `npm run build`, Output Directory를 `dist`로 설정합니다. 같은 설정을 `vercel.json`에도 포함했습니다.
 
 도메인을 정한 뒤 공유 이미지 URL과 canonical URL을 실제 배포 주소로 설정할 수 있습니다. 현재 소셜 메타데이터에는 제목과 설명이 포함되어 있습니다.
-
-## 디자인 참고
-
-[Jin Portfolio](https://jin-portfolio-eta.vercel.app/)와 [Jinacker/PortFolio](https://github.com/Jinacker/PortFolio)의 여백, 소개와 경험 중심의 구성, 상세 내용 전개를 참고했습니다. 색상 방향은 [Spotify 공식 디자인 가이드](https://developer.spotify.com/documentation/design)의 초록색과 검정색에서 가져왔습니다. 화면 코드, `SUMIN CHO` 워드마크, 개념 그래픽과 소개 문구는 이 포트폴리오에 맞게 새로 작성했습니다.
