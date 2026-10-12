@@ -16,6 +16,8 @@ export type Experience = {
   tags: string[];
   details: { title: string; text: string }[];
   link?: { label: string; url: string };
+  github?: string;
+  videos?: { youtubeId: string; title: string }[];
 };
 
 const korean: Experience[] = [
@@ -50,6 +52,8 @@ const korean: Experience[] = [
     description: '기존 CCTV로 제조 현장의 위험을 감지하는 안전 모니터링 시스템.',
     role: '팀 리더',
     tags: ['Python', 'YOLO', 'Computer Vision'],
+    github: 'https://github.com/gisedengdeung/baro',
+    videos: [{ youtubeId: '2WTDW4HqQLo', title: 'BARO 프로젝트 소개 영상' }],
     details: [
       {
         title: '무엇을 만들었나요?',
@@ -124,6 +128,8 @@ const korean: Experience[] = [
     description: '길이·속도·날개 수를 바꿔가며 비행 성능을 추론하는 드론 설계 플랫폼.',
     role: '',
     tags: ['Drone Design', 'Performance Inference'],
+    github: 'https://github.com/gisedengdeung/drawn',
+    videos: [{ youtubeId: 'Ies5ZSquPdg', title: 'DRAWN 프로젝트 소개 영상' }],
     details: [
       {
         title: '설계 조건을 입력하고',
@@ -170,6 +176,7 @@ const english: Experience[] = [
     period: '2026',
     description: 'A safety monitoring system that detects workplace risks through existing CCTV.',
     role: 'Team lead',
+    videos: [{ youtubeId: '2WTDW4HqQLo', title: 'BARO project introduction' }],
     details: [
       {
         title: 'The product',
@@ -237,6 +244,7 @@ const english: Experience[] = [
     category: 'Drones · Design platform',
     description:
       'A drone design platform that infers flight performance from dimensions, speed, and rotor count.',
+    videos: [{ youtubeId: 'Ies5ZSquPdg', title: 'DRAWN project introduction' }],
     details: [
       {
         title: 'Set design parameters',

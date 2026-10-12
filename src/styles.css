@@ -635,6 +635,64 @@ h4 {
 .story-link:hover {
   border-color: #121212;
 }
+.experience-facts .project-github {
+  position: relative;
+  z-index: 2;
+  align-self: flex-start;
+  justify-self: start;
+  margin-top: 0;
+}
+.project-github > svg {
+  width: 14px;
+  height: 14px;
+}
+.project-videos {
+  display: grid;
+  gap: 16px;
+  max-width: 710px;
+  margin-top: 30px;
+}
+.project-videos h4 {
+  font-size: 12px;
+  font-weight: 650;
+}
+.project-video-frame {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #121212;
+}
+.project-video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.project-videos figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: #686868;
+}
+.project-video-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green-dark);
+  font-weight: 600;
+}
+.project-video-link .icon {
+  width: 14px;
+  height: 14px;
+}
+.project-video-link:hover {
+  text-decoration: underline;
+}
 .contact-section {
   padding-block: 57px 73px;
   border-top: 1px solid var(--line);
