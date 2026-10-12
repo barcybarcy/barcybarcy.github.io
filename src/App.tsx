@@ -150,6 +150,15 @@ function ExperienceItem({
                   </div>
                 </div>
               )}
+              {experience.github && (
+                <ExternalLink href={experience.github} className="story-link project-github">
+                  <FaGithub aria-hidden="true" />
+                  <span>
+                    <span className="sr-only">{experience.name} </span>
+                    {t.githubRepository}
+                  </span>
+                </ExternalLink>
+              )}
               {hasDetails && (
                 <span className="explore-story">
                   {open ? t.closeDetails : t.openDetails}
@@ -173,6 +182,39 @@ function ExperienceItem({
               <ExternalLink href={experience.link.url} className="story-link">
                 {experience.link.label}
               </ExternalLink>
+            )}
+            {experience.videos && (
+              <section
+                className="project-videos"
+                aria-label={`${experience.name} · ${t.projectVideos}`}
+              >
+                <h4>{t.projectVideos}</h4>
+                {experience.videos.map((video) => (
+                  <figure key={video.youtubeId}>
+                    <div className="project-video-frame">
+                      {open && (
+                        <iframe
+                          src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                          title={video.title}
+                          loading="lazy"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      )}
+                    </div>
+                    <figcaption>
+                      <span>{video.title}</span>
+                      <ExternalLink
+                        href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
+                        className="project-video-link"
+                      >
+                        {t.watchOnYoutube}
+                      </ExternalLink>
+                    </figcaption>
+                  </figure>
+                ))}
+              </section>
             )}
           </div>
         )}
