@@ -168,6 +168,37 @@ function ExperienceItem({
             </div>
           </div>
         </div>
+        {experience.videos && (
+          <section
+            className="project-videos"
+            aria-label={`${experience.name} · ${t.projectVideos}`}
+          >
+            <h4>{t.projectVideos}</h4>
+            {experience.videos.map((video) => (
+              <figure key={video.youtubeId}>
+                <div className="project-video-frame">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                    title={video.title}
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+                <figcaption>
+                  <span>{video.title}</span>
+                  <ExternalLink
+                    href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
+                    className="project-video-link"
+                  >
+                    {t.watchOnYoutube}
+                  </ExternalLink>
+                </figcaption>
+              </figure>
+            ))}
+          </section>
+        )}
         {hasDetails && (
           <div className="experience-detail" id={`detail-${experience.id}`} hidden={!open}>
             <div className="detail-grid">
@@ -182,39 +213,6 @@ function ExperienceItem({
               <ExternalLink href={experience.link.url} className="story-link">
                 {experience.link.label}
               </ExternalLink>
-            )}
-            {experience.videos && (
-              <section
-                className="project-videos"
-                aria-label={`${experience.name} · ${t.projectVideos}`}
-              >
-                <h4>{t.projectVideos}</h4>
-                {experience.videos.map((video) => (
-                  <figure key={video.youtubeId}>
-                    <div className="project-video-frame">
-                      {open && (
-                        <iframe
-                          src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
-                          title={video.title}
-                          loading="lazy"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                        />
-                      )}
-                    </div>
-                    <figcaption>
-                      <span>{video.title}</span>
-                      <ExternalLink
-                        href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
-                        className="project-video-link"
-                      >
-                        {t.watchOnYoutube}
-                      </ExternalLink>
-                    </figcaption>
-                  </figure>
-                ))}
-              </section>
             )}
           </div>
         )}

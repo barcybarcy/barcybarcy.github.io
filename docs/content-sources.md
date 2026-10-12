@@ -35,7 +35,7 @@
 | ENS CFD 연구       | `ens-airflow.png` → `ens-rise-award.jpg`                                                                           | Ansys Fluent 비강 유동 해석 이미지, RISE 연합 창업경진대회 우수상 수상                                    |
 | DRAWN              | `drawn-development.jpeg` → `drawn-sw-festa-award.jpeg`                                                             | 팀 개발 현장, 2026 경기 SW페스타 AI-Powered SW상상기업 장려상·4위 수상                                    |
 
-`src/projectImages.ts`에서 이미지 매핑, 한·영 캡션·대체텍스트와 표시 방식을 관리합니다. `src/components/ExperienceGallery.tsx`는 썸네일, 이전·다음 탐색, 확대 화면과 키보드 조작을 담당합니다. DRAWN은 개발 현장 사진과 수상 사진을 차례로 표시하며, 기존 SVG 개념 커버 코드는 사진이 없을 때의 대체 표시로 유지합니다. BARO·DRAWN의 GitHub 주소와 YouTube 영상 ID·한영 제목은 `src/data.ts`의 각 경험에서 관리합니다. 영상은 원격 YouTube 플레이어로 제공하며 프로젝트 이미지 순서는 유지합니다.
+`src/projectImages.ts`에서 이미지 매핑, 한·영 캡션·대체텍스트와 표시 방식을 관리합니다. `src/components/ExperienceGallery.tsx`는 썸네일, 이전·다음 탐색, 확대 화면과 키보드 조작을 담당합니다. DRAWN은 개발 현장 사진과 수상 사진을 차례로 표시하며, 기존 SVG 개념 커버 코드는 사진이 없을 때의 대체 표시로 유지합니다. BARO·DRAWN의 GitHub 주소와 YouTube 영상 ID·한영 제목은 `src/data.ts`의 각 경험에서 관리합니다. 2026-10-13 사용자 요청에 따라 영상은 한국어·영어 모두 상세 내용을 펼치지 않아도 각 프로젝트에 기본 표시합니다. 영상 조작 영역은 상세 펼치기 영역과 분리하고, 원격 YouTube 플레이어를 최대 너비 420px의 16:9 비율로 표시합니다. 좁은 화면에서는 사용 가능한 너비에 맞추며, 플레이어 iframe은 지연 로드합니다. 프로젝트 이미지 순서는 유지합니다.
 
 ## 편집 원칙
 
